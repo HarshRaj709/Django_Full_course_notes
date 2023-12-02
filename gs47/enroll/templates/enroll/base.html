@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'enroll/css/bootstrap.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class = 'text-center alert alert-danger'>FUNCTION BASED VIEW MODELFORM CRUD PROJECT</h1>
+        {% block content %}
+
+        {% endblock content %}
+        <script src="{% static 'enroll/js/jquery.js' %}"></script>
+        <script src="{% static 'enroll/js/popper.js' %}"></script>
+        <script src="{% static 'enroll/js/bootstrap.js' %}"></script>
+    </div>
+</body>
+</html>

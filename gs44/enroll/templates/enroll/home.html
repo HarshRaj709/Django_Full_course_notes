@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>THis is home page</h1>
+    <hr>
+    <a href="{% url 'details' 1 %}"><button>Students 1</button></a><br><br><br>
+    <a href="{% url 'details' 2 %}"><button>Students 2</button></a><br><br><br>
+    <a href="{% url 'details' 3 %}"><button>Students 3</button></a><br><br><br>
+    <a href="{% url 'details' 4 %}"><button>Students 4</button></a><br><br><br>
+
+    <hr>
+
+    <a href="{% url 'subdetails' 1 1 %}"><button>Sub Students 1</button></a><br><br><br>
+    <a href="{% url 'subdetails' 2 2 %}"><button>Sub Students 2</button></a><br><br><br>
+    <a href="{% url 'subdetails' 3 3 %}"><button>Sub Students 3</button></a><br><br><br>
+    <a href="{% url 'subdetails' 4 4 %}"><button>Sub Students 4</button></a><br><br><br>
+</body>
+</html>

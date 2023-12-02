@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>THis is login Page</h1>
+        <hr>
+    <form action="" method="post" novalidate >
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                {{error}} <br><br>
+            {% endfor %}
+        {% endif %}
+        {% for fm in form %}
+            {{ fm.label_tag }}{{fm}}{{fm.errors|striptags}} <br><br>
+        {% endfor %}
+        <input type="submit" value="SUBMIT">
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            {{message}} <br><br>
+        {% endfor %}
+    {% endif %}
+    <br><br>
+    <a href="{% url 'signup' %}"><input type="button" value="GO to signup Page"></a>
+    </center>
+</body>
+</html>

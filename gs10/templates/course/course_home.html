@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>My First Bootstrap Page</h1>
+  <h2>{{nm|upper}}</h2>
+  <h2>{{cls}}</h2>
+  <h2>{{name|truncatechars:4}}</h2>    <!-- isme yha pe jitna bhi denge usse ek km leta h truncatechars me -->
+  <h2>hum dono ko ek sath bhi use kr sakte h ya jitne chae utne '{name|upper|truncatechars:4}'</h2>
+
+  <h2>{{nm|default:"hola ka gola"}}</h2>
+
+  <h2>{{names|slice:"3"}}</h2>
+
+  <h1>NOW START FOR DATE SYSTEM</h1>
+
+  <h2>isme humne "SHORT_DATE_FORMAT" use kiya h {{d|date:'SHORT_DATE_FORMAT'}}</h2>      <!--isme main h humara key h usme humne datetime set kiya hua h bus wahi main h-->
+  <h2>{{d|date:'H:i'}}</h2>                    <!--name kuch bhi nhi rakh sakte h wo must koi keyword type hona chahiye jese "date"-->
+  <h2>ye {{dt|date:'DATETIME_FORMAT'}}</h2>   
+  <h2> time left: {{my_datetime|timesince}}</h2>  <!--esse hi naturaltime bhi hota h difference btane ke liye--> 
+
+<br><br>
+  <h1><U>NOW GOING TO WORK WITH "IF" TAG</u></h1>
+  {% if nm %}
+    <ol><li><h3>yha pe humne use kiya h if statement ka iske sath hi humko apni galti pta chli h ki condition ke sath only 1{} use kiya jata h aur variable ke sath 2{}</ol></h3>
+  {% endif%}
+
+  <br><br>
+
+  {% if nm and st == 'harsh' %}
+      <h2><ul><li>yha pe humne 2 condition lga di h simple jese ki hum krte the "and" / "or" / "not" </li></ul></h2>
+  {% comment %} {% else %}   <!-- ese hi hum elif bhi use kr sakte h {% elif nm== "harsh" %}--> {% endcomment %}
+      <h2>under the else condition</h2>
+  {% endif%}
+
+
+  <br><br>
+
+  <h1><u> NOW GOING TO WORK WITH "FOR TAG"</U></h1>
+    <ol>
+    {% for name in names reversed %}  <!--if want to reverse the list just add reversed at last-->
+      {% comment %} {{forloop.counter}}  <!--isse humko loop iteration (aur bhi bahut type ke hote h unko search krlena) ka number milta h--> {% endcomment %}
+      <li>{{name}}</li>
+    {% empty %}
+      <b>LIST IS EMPTY</B>
+    {% endfor %}
+    </ol>
+
+    <h2><u><b>for dictionary</b></u></h2>
+    <h3>me hu na</h3>
+      {% for key,value in dicts.items %}
+        <b>{{ key }}</b> : {{ value }}<br>
+      {% endfor %}
+  
+
+  <p>Resize this responsive page to see the effect!</p> 
+</div>
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Column 1</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Column 2</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Column 3</h3>        
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

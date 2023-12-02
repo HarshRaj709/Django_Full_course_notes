@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is Home Page.</h1>
+    <a href="{% url 'set' %}"><input type="button" value="Normal Cookie Set"></a>
+    <a href="{% url 'get' %}"><input type="button" value="Normal Cookie get"></a>
+    <a href="{% url 'delete' %}"><input type="button" value="Normal Cookie delete"></a>
+    <a href="{% url 'saltcookie' %}"><input type="button" value="Salt Cookie Set"></a>
+    <a href="{% url 'getsalt' %}"><input type="button" value="Salt Cookie get"></a>
+    <a href="{% url 'delsalt' %}"><input type="button" value="Salt Cookie delete"></a>
+</body>
+</html>

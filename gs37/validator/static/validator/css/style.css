@@ -1,0 +1,23 @@
+body{
+    background-color: rgb(113, 62, 25);
+}
+
+form{
+    height:400px;
+    width: 450px;
+    box-shadow: 5px 5px 10px gray; 
+    /* box-shadow: [horizontal offset] [vertical offset] [blur radius] [spread radius] [color]; */
+
+}
+
+li{
+    color: red;
+}
+
+input[type='submit']{
+    margin-top:50px
+}
+
+.email{
+    color: rgb(232, 13, 13);
+}

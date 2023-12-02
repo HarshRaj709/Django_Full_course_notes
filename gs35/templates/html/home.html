@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>This is home page.</h1>
+    <ul>
+        <li>HELLO</li>
+        <li>HI</li>
+        <li>NICE</li>
+    </ul>
+    <hr>
+    <center>
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {{use.as_p}}
+            <input type = 'submit' value="SUBMIT" class='submit'>
+        </form>
+    </center>
+    
+</body>
+</html>

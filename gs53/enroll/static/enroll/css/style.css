@@ -1,0 +1,21 @@
+body{
+    background-color: brown;
+}
+
+.forms{
+    width:50%;
+    height:60%;
+    box-shadow: 5px 5px 10px white;
+}
+
+.errorlist{
+    color:rgb(113, 206, 234);
+}
+
+.success{
+    color:blue;
+}
+
+.fields{
+    color:aliceblue;
+}

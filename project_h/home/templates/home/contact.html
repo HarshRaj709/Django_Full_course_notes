@@ -1,0 +1,32 @@
+{% extends 'home/base.html' %}
+{% block title %}Contact Page{% endblock title %}
+
+    {% block body %}
+    <div class="container">  
+        <h3 class = 'text-center my-5'>This is contact Page</h3>
+        <form action="/contact/" method = 'post' novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name='name' placeholder="Harsh Sahu">
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Enter your Email</label>
+                <input type="email" class="form-control" id="email" name='email' placeholder="Harsh709@gmail.com">
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">Your Message</label>
+                <textarea class="form-control" id="message" name='message' rows="3"></textarea>
+              </div>
+              <input type="submit" class = 'btn btn-success' value="Send">
+        </form>
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="container col-sm-3 alert alert-warning alert-dismissible bg-dark text-light" role="alert">
+            <strong>Success</strong> {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+    {% endif %} 
+    {% endblock body %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            background-color:red;
+        }
+        .errorlist{
+            color:red;
+        }
+        .form{
+            height:50%;
+            width:50%;
+            box-shadow:5px 5px 10px black;
+        }
+        .message{
+            color: blue;
+        }
+    </style>
+    <title>Sign UP Page</title>
+</head>
+<body>
+    <center>
+    <h1>This is Sign_up Page.</h1>
+    <hr>
+    <form action="" class='form' method="post" novalidate>
+        {% csrf_token %}
+        {% for fm in form %}
+        {{fm.label_tag}}{{fm}}
+        <span class='errorlist'>{{fm.errors|striptags}}</span> <br><br>
+        {% endfor %}
+        <input type="submit" value="SUBMIT">
+    </form>
+    <br><br>
+    {% if messages %}
+        {% for message in messages %}
+            <span class='message'>{{message}}</span>
+        {% endfor %}
+    {% endif %}
+
+    <a href="{% url 'login' %}"><input type="button" value="GO To Login Page"></a>
+</center>
+</body>
+</html>

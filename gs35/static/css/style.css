@@ -1,0 +1,26 @@
+body {
+    background-color:palegoldenrod;
+}
+
+h1{
+    color:red;
+}
+
+ul li{
+    color:green;
+}
+
+form{
+    width:300px;
+    height: 400px;
+    padding-top: 20px;
+    box-shadow: 5px 5px 10px gray;
+}
+
+/* form .submit{
+    margin-top: 200px;
+} */
+
+input[type='submit']{
+    margin-top: 100px;
+}

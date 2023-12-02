@@ -1,0 +1,12 @@
+{% extends 'enroll/base.html' %}
+
+<h2>go to forms page click below</h2>
+<a href="{% url 'form' %}"><button>click here to go to forms page</button></a>
+
+{% block heading %}<h1>THis is Home page</h1>{% endblock heading %}
+
+
+{% block content %}
+<h2>To go to forms page click below</h2>
+<a href="{% url 'form' %}"><button>click here to go forms page</button></a>
+{% endblock content %}

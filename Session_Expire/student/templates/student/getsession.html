@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is Get session page.</h1>
+    {{name}} <br><br>
+    THe Age of this session is {{age}} Days from now. <br><br>
+    THe Age of this session is {{exp}} Days from now. we get this by request.session.get_expiry_date() <br><br>
+    THe Age of this session is {{bro}} we get this by request.session.get_expire_at_browser_close() <br><br>
+    This session life from now is {{real}}sec <br><br>
+    <a href="{% url 'set' %}"><input type="button" value="set session Data"></a>
+    <a href="{% url 'del' %}"><input type="button" value="Del session"></a>
+    <a href="{% url 'home' %}"><input type="button" value="home"></a>
+</body>
+</html>

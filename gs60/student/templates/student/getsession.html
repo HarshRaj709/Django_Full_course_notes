@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Session</title>
+</head>
+<body>
+    {{name}} <hr>
+    {% for key in keys %}
+        This is key: {{key}} <br><br>
+    {% endfor %}
+    <hr>
+    {% for key,value in items %}
+        These are Sessions items:> {{key}}:{{value}} <br><br>
+    {% endfor %}
+
+    <hr>
+    {{age}} <br><br>
+    <a href="{% url 'set' %}"><input type="button" value="SET Session"></a>
+    <a href="{% url 'delete' %}"><input type="button" value="DELETE Session"></a>
+    <a href="{% url 'home' %}"><input type="button" value="home"></a>
+</body>
+</html>

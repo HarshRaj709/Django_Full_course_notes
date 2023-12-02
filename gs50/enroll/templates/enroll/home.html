@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .success{
+            color:green;
+        }
+        .info{
+            color:blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>This is home page.</h1>
+    {% comment %} {% if messages %}
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
+    <hr>
+    <a href="{% url 'message' %}"><input type="button" value="Click TO Message"></a> {% endcomment %}
+
+    <hr>
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="SUBMIT">
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+        {% comment %} {% if message.tags %}{{message.tags}}{% endif %}
+        <strong>Awesome!</strong> <span class='success'>{{message}}</span> {% endcomment %}
+        <span {% if message.tags %} class='{{message.tags}}' {% endif %}>{{message}}</span><br>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

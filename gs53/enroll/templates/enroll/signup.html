@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'enroll/css/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>This is Default UserCreationForm</h1>
+        <hr>
+        <form action="" method="post" class='forms' novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors%}
+                    <span class='errorlist'>{{error}}</span> <br>
+                {% endfor %}
+            {% endif %}
+            {% for fm in form %}
+            <span class="fields">{{fm.label_tag}}</span>
+            {{fm}}
+            <span class="errorlist">{{fm.errors|striptags}}</span> <br><br><br>
+            {% comment %} {% for error in fm.errors %}
+            <span class="errorlist">{{error}}</span><br>
+            {% endfor %} {% endcomment %}
+            {% endfor %}
+            <input type="submit" value="SUBMIT">
+        </form>
+        <br><br>
+        <a href="{% url 'login' %}"><button>Go to login page</button></a>
+        {% if messages %}
+            {% for message in messages %}
+                <span {% if message.tags %} class = '{{message.tags}}' {% endif %} >{{message}}</span>
+                
+            {% endfor %}
+        {% endif %}
+    </center>
+</body>
+</html>

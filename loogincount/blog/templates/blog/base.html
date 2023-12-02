@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container-fluid bg-dark">  <!--container-fluid: This class is used to create a full-width container that spans the entire width of the viewport. It's not fixed to a specific max-width, and it adapts to the screen size. It's often used when you want a full-width layout.-->
+        {% include 'blog/navbar.html' %}
+    </div>
+    <div class="container">
+        <div class="row">  <!--The <div class="row"> code snippet is a common Bootstrap class that's used to create a row within the Bootstrap grid system.-->
+            <div class="col-sm-10">
+                {% block msg %}
+                {% endblock msg %}
+            </div>
+        </div>
+        <div class="row">
+            {% block side %}   <!--user Profile-->
+            {% endblock side %}
+
+            {% block content %}  <!--Main content-->
+            {% endblock content %}
+        </div>
+    </div>
+
+    <script src="{% static 'blog/js/jquery.js' %}"></script>
+    <script src="{% static 'blog/js/popper.js' %}"></script>
+    <script src="{% static 'blog/js/bootstrap.js' %}"></script>
+</body>
+</html>

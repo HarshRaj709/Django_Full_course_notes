@@ -1,0 +1,17 @@
+.errorlist{
+    color:rgb(227, 178, 16);
+    font-style: italic;
+}
+
+ul {
+    list-style-type:none;
+}
+
+.mongo{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+body{
+    background-color: royalblue;
+}

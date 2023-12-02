@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'enroll/css/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+    <h1>THis is Profile page.</h1>
+    <h2>Welcome {{name}}</h2>
+    <hr>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    <hr>
+    <a href="{% url 'home' %}"><input type="submit" value="BACK TO HOME"></a>
+    <a href="{% url 'login' %}"><input type="submit" value="BACK TO Login"></a>
+    <a href="{% url 'logout' %}"><input type="submit" value="Logout"></a>
+</center>
+</body>
+</html>

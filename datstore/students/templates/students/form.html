@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'students/css/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>This is Form Page through Model.py</h1>
+        <hr>
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {% for field in use %}
+            <div class = 'form'>
+                {{field.label_tag}}{{field}}
+                {% for error in field.errors %}
+                <span class = 'error'>{{error}}</span>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <input type="submit" value="submit">
+        </form>
+    </center>
+</body>
+</html>

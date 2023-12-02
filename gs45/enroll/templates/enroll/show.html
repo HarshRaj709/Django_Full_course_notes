@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>THis is SHOW page.</h1>
+    <hr>
+    <b>{{id}}</b> - This is the key we are getting from the Dynamic urls.http://127.0.0.1:8000/student/4/  <br>
+    here we can add anything in our url but get landed on same page each time.
+    <br><br><br>
+
+    <hr>
+    Student id= {{id}}
+    <br>
+    student name = {{name}}
+    <br>
+    student details = {{info}}
+    <hr>
+    <a href="{% url 'ghar' %}"><button>click to go home</button></a>
+</body>
+</html>

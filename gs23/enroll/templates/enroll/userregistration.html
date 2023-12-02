@@ -1,0 +1,57 @@
+{% comment %} {% extends 'enroll/base.html' %}
+
+{% block heading %}<h1>This is Forms Page.</h1>{% endblock heading %}
+    {% block heading2 %}{% endblock heading2 %}
+
+    
+
+{% block content %}
+{{form}}
+<br>
+<h2> TO go to home page click below </h2>
+{% endblock content %}
+{% block button %}<a href="{% url 'home' %}"><button>click here</button></a>{% endblock button %} {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>forms</title>
+</head>
+<body>
+    <h2>using 'simple form'</h2>
+    <form action="get">{{form}}
+    <input type="Submit" value="submit" >
+    </form>
+
+    <hr>
+    <h2>using 'form.as_table'</h2>
+    <form action="get">{{form.as_table}}
+    <input type="Submit" value="submit" >
+    </form>
+
+    <hr>
+    <h2>using 'form.as_ul'</h2>
+    <form action="get">{{form.as_ul}}
+    <input type="Submit" value="submit" >
+    </form>
+
+    <hr>
+    <h2>using 'form.as_p'</h2>
+    <form action="get">{{form.as_p}}
+    <input type="Submit" value="submit" >
+    </form>
+    
+    <hr>
+    <h2>using 'form.name'</h2>
+    <form action="get">
+        {{form.name}}
+        {{form.email}}
+    <input type="Submit" value="submit" >
+    </form>
+
+    <h2>Click below to go to home page</h2>
+    <a href="{% url 'home' %}"><button>click here</button></a>
+    
+</body>
+</html>

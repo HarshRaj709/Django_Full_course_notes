@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action=""method='get'>
+    {% comment %} {{use}} {% endcomment %}
+    <div>
+        <label for="id_name">Name:</label>
+        <input type= "text" name = 'name' required id="id_name"></input>
+    </div>
+    <div>
+        <label for='{{use.names.id_for_label}}'>Name:</label>
+        <input type= "text" name = 'name' required id="id_name"></input>
+        {{use.email}}
+        {{use.names}}
+        {{use.names.label_tag}}
+    </div>
+    <div>{{use.names.label}}</div>
+    <div>{{use.names.value}}</div>
+    <div>
+        {{use.First_name.help_text}}
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,13 @@
+body {
+        background-color:red;
+}
+
+img {
+    width: 500px; /* auto; */
+    height: 600px;
+    padding-right: 50px;
+}
+
+h2{
+    color: wheat;
+}

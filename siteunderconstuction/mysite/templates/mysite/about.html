@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'mysite/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'mysite/css/style.css' %}">
+    <title>My site</title>
+</head>
+<body class="bg-secondary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a href="#" class="navbar-brand">My Site</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a href="#" class="nav-link">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="/about/" class="nav-link">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a href="#" class="dropdown-item">Python</a>
+                        <a href="#" class="dropdown-item">Django</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">Java</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <p class='text-white'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione officia voluptatibus ipsa iure minus dolorem quisquam sed, non excepturi nemo porro soluta culpa numquam maxime cumque minima ducimus dicta sunt possimus? Dolor, voluptatum veritatis vitae consequuntur provident officiis aliquid, corporis, unde quod repellat architecto! Libero laborum quidem perferendis incidunt ducimus dolore nihil iste vitae praesentium quisquam ab quasi, aspernatur hic? Fugiat sed est eaque assumenda molestiae deleniti harum, incidunt natus similique, quod, sint ullam. Obcaecati error pariatur eaque quidem amet architecto, quod delectus consequatur voluptatibus reiciendis tenetur praesentium nobis suscipit ratione quia iusto sapiente illo! Id, tempora! Sapiente perspiciatis dolore dignissimos sint veritatis debitis aperiam rem iusto accusamus cum consequuntur et earum, similique nostrum inventore nam. Rem quibusdam accusantium repellendus? Molestias architecto explicabo tempora laborum error magnam ipsum minima saepe perferendis accusamus rem possimus mollitia iure odit, qui corrupti aperiam aut? Et ipsam accusamus aperiam ea hic autem odio deserunt dolorem saepe dignissimos quia maxime qui distinctio illum fugiat, porro aliquam, quae aut quos voluptas voluptates cum. Temporibus, ut quo ea quibusdam praesentium nihil esse eveniet officiis repudiandae debitis fugiat, error eos quam deleniti aliquid voluptatibus odio aperiam non fuga quos ratione corporis. Vel iure minus nobis, velit sit illo ratione obcaecati reprehenderit veritatis quod, excepturi assumenda explicabo quos neque magnam officia ipsa aperiam, totam architecto debitis laboriosam sapiente. Similique sed, in minus quidem quisquam ratione officiis itaque quis ad iusto laudantium eveniet totam numquam maiores ea explicabo sapiente provident, aut deleniti dolore soluta cupiditate, illum harum. Saepe aliquid placeat, molestiae eos omnis alias eius soluta nostrum recusandae distinctio? Excepturi optio, eum ex est enim, officiis vero quos ad provident explicabo praesentium, tempore earum cumque impedit rerum mollitia porro! Impedit exercitationem voluptate quae voluptas temporibus explicabo consectetur! Laborum officiis delectus magnam cumque sed eius sit, deserunt reprehenderit atque suscipit obcaecati!</p>
+    </div>
+
+    <script src="{% static 'mysite/js/jquery.js' %}"></script>
+    <script src="{% static 'mysite/js/popper.js' %}"></script>
+    <script src="{% static 'mysite/js/bootstrap.js' %}"></script>
+</body>
+</html>

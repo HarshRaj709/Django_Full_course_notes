@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'core/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/bootstrap.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prosto+One&family=Rancho&family=Satisfy&display=swap" rel="stylesheet">
+    {% block corecss %}
+    <link rel="stylesheet" href="{% static 'core/css/core.css' %}">
+    {% endblock corecss %}
+</head>
+<body>
+
+    <div class='container-fluid bg-dark'>
+        <div class='row'>
+            <div class='col-sm-2'>
+                {% include 'core/sidebar.html' %}            
+                {% comment %} <hr class='vertical_line'>            {% endcomment %}
+            </div>
+            <div class='col-sm-10'>                    
+                {% block content %}{% endblock content %}
+            </div>
+        </div>
+    </div>
+    
+    <script src="{% static 'core/js/jquery.js' %}"></script>
+    <script src="{% static 'core/js/popper.js' %}"></script>
+    <script src="{% static 'core/js/all.min.js' %}"></script>
+    <script src="{% static 'core/js/bootstrap.js' %}"></script>
+    
+</body>
+</html>

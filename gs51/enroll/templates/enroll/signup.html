@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .errors{
+            color:red;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body><center>
+        <h1> THis is default User registration Form</h1>
+        <form action="" method="post" novalidate style='height:400px;width: 500px;box-shadow:5px 5px 10px'>
+            {% csrf_token %}
+            {% for fm in form %}
+            {{fm.label_tag}}
+            {{fm}} 
+            <span class='errors'>{{fm.errors|striptags}} <br><br><br></span>
+            {% comment %} {{form.as_p}} esse,sare ke sare errors ek sath dikh rhe the {% endcomment %}
+            {% endfor %}
+            <input type="submit" value="SUBMIT">
+        </form>
+    </center>
+</body>
+</html>

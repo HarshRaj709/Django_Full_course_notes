@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>THis is home page.</h1>
+    <hr>
+    <h2>Exam details</h2>
+    <table border = '2px'>
+        <tr>
+            <th>ID</th>
+            <th>Center</th>
+            <th>city</th>
+            
+        </tr>
+    
+    {% for ex in exam %}
+    <tr>
+    <td>{{ex.id}}</td>
+    <td>{{ex.cname}}</td>
+    <td>{{ex.city}}</td>
+    </tr>
+    {% endfor %}
+</table>
+    <hr>
+    <h2>MyExam center Data</h2>
+    <table border = '2px'>
+        <tr>
+            <th>ID</th>
+            <th>center</th>
+            <th>city</th>
+        </tr>
+    
+    {% for m in my %}
+    <tr>
+        <td>{{m.id}}</td>
+        <td>{{m.cname}}</td>
+        <td>{{m.city}}</td>
+    </tr>
+    {% endfor %}
+</table>
+    {% comment %} {{teachers}} {% endcomment %}
+</body>
+</html>

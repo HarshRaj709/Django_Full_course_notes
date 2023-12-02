@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'enroll/style.css' %}">
+</head>
+<body>
+    {% block heading %}<h1>THis is basic page for all webapp pages</h1>{% endblock heading %}
+    <hr>
+    {% block heading2 %}<h1><u>if you want to go to students page click below</u></h1>{% endblock heading2 %}
+
+    {% block button %}<a href="{% url 'stu' %}"><button>click here</button></a>{% endblock button %}
+    {% block content %}{% endblock content %}
+    
+</body>
+</html>

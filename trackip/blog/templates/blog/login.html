@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="col-sm-10">
+        <h3 class="text-white my-5">Login Page</h3>
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {% comment %} {{form.as_p}} {% endcomment %}
+            {% for fm in form %}
+                <div class="mb-3">
+                    {{fm.label_tag}}
+                    {{fm}}
+                    <small class="text-warning">{{fm.errors|striptags}}</small> <!--Agar direct errors na dikhe to humko phle errors ko lana hota h-->
+                </div>  
+            {% endfor %}
+            <input type="submit" class = 'btn btn-primary' value="Login">
+            <br><br>
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <p class='alert alert-danger my-3'>{{error}}</p> <br>   <!--span me krne se chota aa rha tha-->
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+{% endblock content %}

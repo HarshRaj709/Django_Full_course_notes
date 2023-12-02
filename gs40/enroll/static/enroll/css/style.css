@@ -1,0 +1,22 @@
+body{
+    background-color: rgb(107, 23, 23);
+}
+
+h1{
+    color:whitesmoke;
+}
+
+form{
+    height: 200px;
+    width: 250px;
+    box-shadow: 5px 5px 10px red;
+}
+
+input[type='text']{
+    width: 70%;
+}
+
+.errorlist{
+    color: white;
+    list-style: none;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+    <h1>This is home Page</h1>
+    <hr>
+    
+    {% comment %} {% for stu in student %}
+        {{stu.Roll}} &nbsp; {{stu.Name}} &nbsp; {{stu.city}} &nbsp; {{stu.Marks}} &nbsp; {{stu.Pass_date}}<br>
+        {% empty %}
+            <p>No data Found</p>
+    {% endfor %} {% endcomment %}
+    <table border='2px'>
+        <tr>
+            <th>Roll NO.</th>
+            <th>Student Name.</th>
+            <th>Student City</th>
+            <th>Student Marks</th>
+            <th>Student Passing Date</th>
+        </tr>
+        {% for stu in student %}
+            <tr>
+                <td>{{stu.Roll}}</td>
+                <td>{{stu.Name}}</td>
+                <td>{{stu.city}}</td>
+                <td>{{stu.Marks}}</td>
+                <td>{{stu.Pass_date}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    </center>
+</body>
+</html>

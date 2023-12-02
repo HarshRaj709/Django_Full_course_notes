@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is Home Page</h1>
+    <hr>
+    {% comment %} {{students}} {% endcomment %}
+    <table border = '2px brown'>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Roll</th>
+            <th>City</th>
+            <th>Marks</th>
+            <th>Passing Year</th>
+            <th>Admission Date Time</th>
+        </tr>
+    {% for student in students %}
+        <tr>
+            <td>{{student.id}}</td>
+            <td>{{student.name}}</td>
+            <td>{{student.roll}}</td>
+            <td>{{student.city}}</td>
+            <td>{{student.marks}}</td>
+            <td>{{student.passdate}}</td>
+            <td>{{student.admdatetime}}</td>
+        </tr>
+        
+    {% endfor %}
+    </table>
+</body>
+</html>

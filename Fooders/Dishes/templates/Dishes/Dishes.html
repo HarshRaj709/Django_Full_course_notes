@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Here you will get all the ingreidents we used in this Recepie..</h1>
+    <h2>The ingreidents in {{recipe.recipe_name}} are-</h2>
+        {{recipe.ingri}}
+    <hr>
+    <button type="button"><a href="{% url 'home' %}">Home</a></button>
+</body>
+</html>

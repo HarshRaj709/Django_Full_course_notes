@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">  <!-- we changes values here from {bg-body-tertiary}-->
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Mini Blog</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link {{activate}}" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{about}}" href="{% url 'about' %}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{contact}}" href="{% url 'contact' %}">Contact</a>
+        </li>
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+              <a class="nav-link {{dashboard}}" href="{% url 'dashboard' %}">DashBoard</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link {{logout}}" href="{% url 'logout' %}">Logout</a>
+          </li>
+        {% else %}
+
+        <li class="nav-item">
+            <a class="nav-link {{signup}}" href="{% url 'signup' %}">SignUp</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{login}}" href="{% url 'login' %}">Login</a>
+        </li>
+
+        {% endif %}
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+</body>
+</html>

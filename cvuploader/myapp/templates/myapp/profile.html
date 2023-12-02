@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'myapp/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/css/all.css' %}">
+    <title>Candidate Profile</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class='alert-danger text-center'>Candidate Detail</h1>
+        <div class="row">
+            <div class="col-sm-10 shadow-lg offset-sm-1">
+                <h3 class ='text-center'><u>Resume</u></h3>
+                <p class="">Application No. {{form.id}}</p>
+                <img src="{{form.profile_image.url}}" alt="No Photo found" class = 'img-fluid img-thumbnail mt-2' width='150' height='150'>
+                <p>Name: {{form.name}}</p>
+                <p>Date of Birth: {{form.dob}}</p>
+                <p>Gender: {{form.gender}}</p>
+                <p>Address: {{form.locality}},{{form.city}},{{form.state}}-{{form.pin}}</p>
+                <p>Mobile No. {{form.mobile}}</p>
+                <p>Email ID: {{form.email}}</p>
+                <p>Preferred Job Cities: {{form.job_city}}</p>      <!--#abhi humare me [] me dikah rha h-->
+                {% if form.my_file %}
+                    <p>Attachment: <a href="{{form.my_file.url}}">Download File</a></p>
+                {% else %}
+                    <p>No Attachment Found</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="text-center">
+            <a href="{% url 'home' %}" class='text-center'><button type="button" class='btn btn-primary mt-2'>GO Back To Home</button></a>
+        </div>
+    </div>
+
+    <script src="{% static 'myapp/js/jquery.js' %}"></script>
+    <script src="{% static 'myapp/js/popper.js' %}"></script>
+    <script src="{% static 'myapp/js/bootstrap.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Your session is deleted from database as well as from browser because we use both flush and clear_expired</h1>
+    <hr>
+    <a href="{% url 'set' %}"><input type="button" value="Set Session"></a>
+    <a href="{% url 'get' %}"><input type="button" value="Get Session"></a>
+    <a href="{% url 'del' %}"><input type="button" value="Delete Session"></a>
+    <a href="{% url 'home' %}"><input type="button" value="home"></a>
+</body>
+</html>

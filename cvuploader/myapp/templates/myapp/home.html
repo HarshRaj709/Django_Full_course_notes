@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'myapp/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <title>Cv Uploader</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class='alert-danger text-center p-2'>Resume Uploader</h1>
+        <div class="row">
+            <div class="col-sm-8">
+                <form action="" method="post" enctype='multipart/form-data' class='shadow-lg p-10' novalidate>
+                    {% csrf_token %}
+                    {% for fm in form %}
+                        <div class="form-group m-2 mb-3">
+                            {{fm.label_tag}} {{fm}}<small class="text-danger">{{fm.errors|striptags}}</small>
+                        </div>
+                    {% endfor %}
+                    <input type="submit" value="Submit" class='btn btn-primary'>
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <p class="alert alert-danger my-3">{{error}}</p>
+                        {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <h4 class='text-center mb-3'><u>list of candidate</u></h4>
+                {% for pr in pro %}
+                    {{pr.id}} : <a href="{% url 'profile' pr.id %}">{{pr.name}}</a>
+                    <hr>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    <script src="{% static 'myapp/js/jquery.js' %}"></script>
+    <script src="{% static 'myapp/js/popper.js' %}"></script>
+    <script src="{% static 'myapp/js/bootstrap.js' %}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function(){
+            $('#datepicker').datepicker();
+        });
+    </script>
+</body>
+</html>

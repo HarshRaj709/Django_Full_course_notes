@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>This is Profile Page.</h1>
+        <hr>
+    <form action="" method="post" novalidate >
+        {% csrf_token %}
+        {% for fm in form %}
+            {{ fm.label_tag }}{{fm}}{{fm.errors|striptags}} <br><br>
+        {% endfor %}
+        <input type="submit" value="SUBMIT">
+    </form>
+    <br>
+    {% if users != None %}
+        <table border = '2px'>
+            <tr><th>Users:</th><tr>
+        {% for user in users %}
+        <tr><td><a href="{% url 'userdetail' user.id %}">{{user.username}}</a></td></tr>           {% comment %}   user.email//user.first_name//user.last_name {% endcomment %}
+        {% endfor %}
+        </table>
+    {% endif %}
+    
+    {% if messages %}
+        {% for message in messages %}
+            {{message}} <br><br>
+        {% endfor %}
+    {% endif %}
+    <br><br>
+        <a href="{% url 'logout' %}"><input type="button" value="Logout"></a>
+        <a href="{% url 'password' %}"><input type="button" value="Change Password"></a>
+        <a href="{% url 'signup' %}"><input type="button" value="GO to signup Page"></a>
+    </center>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            background-color:red;
+        }
+        .errorlist{
+            color:red;
+        }
+        form{
+            height:50%;
+            width:50%;
+            box-shadow:5px 5px 10px black;
+        }
+        .message{
+            color: blue;
+        }
+    </style>
+    <title>Profile</title>
+</head>
+<body>
+    <center>
+    <h1>This is Profile Page of {{name}}.</h1>
+    <hr>
+    <form action="" method="post">
+    <a href="{% url 'signup' %}"><input type="button" value="Back to signup page"></a><br><br>
+    <a href="{% url 'logout' %}"><input type="button" value="logout"></a><br><br>
+    <a href="{% url 'changepass1' %}"><input type="button" value="Change password with old pass"></a><br><br>
+    <a href="{% url 'changepass2' %}"><input type="button" value="Change password without old pass"></a><br><br>
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            <span class='errorlist'>{{message}}</span>
+        {% endfor %}
+    {% endif %}
+</center>
+</body>
+</html>

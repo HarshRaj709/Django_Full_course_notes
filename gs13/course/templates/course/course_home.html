@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+
+</head>
+<body>
+    <h1><center><u>attaching images and css using {static}</u></center></h1>
+    <img src='{% static "images/new.png" %}'>
+    <img src="{% get_static_prefix %}images/new.png" alt="no">
+    <h1>this our basic course webpage</h1>
+    <hr/>
+    <form action="">
+        <center><input type="button" value="click me" onclick = "disp()"></center>
+    </form>
+    <script src="{% static 'js/all.js' %}"></script>
+</body>
+</html>

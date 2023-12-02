@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="col-sm-10">
+        <h3 class="text-white my-5">Contact Page</h3>
+        <section class="contact-wrap">
+        <form action="" class="contact-form">
+          <div class="col-sm-6">
+            <div class="input-block">
+              <label for="" class='text-warning'>First Name</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-block">
+              <label for=""class='text-warning'>Last Name</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="input-block">
+              <label for="" class='text-warning'>Email</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="input-block">
+              <label for="" class='text-warning'>Message Subject</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="input-block textarea">
+              <label for="" class='text-warning'>Drop your message here</label>
+              <textarea rows="3" type="text" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <button class="square-button text-black">Send</button>
+          </div>
+        </form>
+      </section>
+        
+    </div>
+{% endblock content %}

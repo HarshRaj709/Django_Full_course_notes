@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<heads>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</heads>
+<body>
+    <h1>This is forms.</h1>
+    <form action="student/stname"method='get'>
+    {% for i in stds.visible_fields %}
+    {{i.label_tag}}     {% comment %} esse on fields ke name aynge only labels means {% endcomment %}
+    {{i}}
+    {% endfor %}
+        <hr>
+    {% for i in stds.hidden_fields %}     {% comment %} esse on fields ke name aynge only labels means {% endcomment %}
+    {{i.label_tag}}
+    {{i}}
+    {% endfor %}
+    <input type="submit" value="submit">
+    </form>
+</body>
+</html>
+

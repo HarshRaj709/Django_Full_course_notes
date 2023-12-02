@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is default name template which we get by by ListView.</h1>
+    <table border = 2px solid red; >
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>ROLL</th>
+            <th>Course</th>
+        </tr>
+    
+    {% for stu in students %}
+    <tr>
+        <td>{{stu.id}}</td>
+        <td>{{stu.name}}</td>
+        <td>{{stu.roll}}</td>
+        <td>{{stu.course}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
+    <hr>
+
+    <table border = 2px solid red; >
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>ROLL</th>
+            <th>Course</th>
+        </tr>
+    
+    {% for stu in freshers %}
+    <tr>
+        <td>{{stu.id}}</td>
+        <td>{{stu.name}}</td>
+        <td>{{stu.roll}}</td>
+        <td>{{stu.course}}</td>
+    </tr>
+    {% endfor %}
+    
+    </table>
+</body>
+</html>

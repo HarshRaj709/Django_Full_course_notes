@@ -1,0 +1,16 @@
+body{
+    background-color: rgb(75,74,74);
+    color: antiquewhite;
+}
+
+.jumbo-color{
+    background-color: rgb(83, 81, 81);
+}
+
+.form-control{                    /*  isse jab hum likh rhe h to color change ho rha h nhi to alag colour h */
+    background-color: rgb(177, 168, 168);
+}
+
+.errorlist{
+    color: red;
+}

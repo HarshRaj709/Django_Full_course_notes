@@ -1,0 +1,14 @@
+#id_gender{
+    list-style-type: none;
+    display: inline-flex;
+    margin-left: 20px;
+}
+
+#id_job_city{
+    display: inline-flex;
+    margin-left: 20px;
+}
+
+label{
+    margin-left: 20px;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is students page.</h1>
+    <hr>
+    {{stu}}
+    <hr>
+    {% if stu %}
+        <table border = 2px>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+            </tr>
+            {% for st in stu %}
+                <tr>
+                    <td>{{st.stuid}}</td>
+                    <td>{{st.stuname}}</td>
+                    <td>{{st.stuemail}}</td>
+                    <td>{{st.stupass}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    <hr>
+    <h2>click below to go to home page</h2>
+    <a href="{% url 'home' %}"><button>click to go to home page</button></a>
+</body>
+</html>

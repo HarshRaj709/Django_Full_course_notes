@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'enroll/css/style.css' %}">
+</head>
+<body>
+    <center>
+        <h1><u>This is home</u></h1>
+        <hr>
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {{use.as_p}}
+            <input type="submit" value="SUBMIT">
+        </form>
+    </center>
+</body>
+</html>

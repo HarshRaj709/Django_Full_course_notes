@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>THis is home page.</h1>
+    <hr>
+    {% comment %} {{students}} {% endcomment %}
+    <h2>Students details</h2>
+    <table border = '2px'>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>AGE</th>
+            <th>Student id</th>
+            <th>FEES SUBMITED</th>
+        </tr>
+    
+    {% for stu in students %}
+    <tr>
+    <td>{{stu.id}}</td>
+    <td>{{stu.name}}</td>
+    <td>{{stu.age}}</td>
+    <td>{{stu.student_id}}</td>
+    <td>{{stu.fees_Submited}}</td>
+    </tr>
+    {% endfor %}
+</table>
+    <hr>
+    <h2>Teachers details</h2>
+    <table border = '2px'>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>AGE</th>
+            <th>Teacher id</th>
+            <th>Salary</th>
+        </tr>
+    
+    {% for tea in teachers %}
+    <tr>
+    <td>{{tea.id}}</td>
+    <td>{{tea.name}}</td>
+    <td>{{tea.age}}</td>
+    <td>{{tea.Teachers_id}}</td>
+    <td>{{tea.Salary}}</td>
+    </tr>
+    {% endfor %}
+</table>
+    {% comment %} {{teachers}} {% endcomment %}
+</body>
+</html>

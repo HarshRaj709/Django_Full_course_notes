@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>This is Dashboard Page.{{name}}</h1> 
+        {% if perms.enroll.delete_blog %}     <!--here we can use view//change//add in place of delete-->
+
+        <h2>This are your Published Blocks, Which Blog you want to delete.</h2>
+        {% if user %}
+            {% for use in user %}
+                {{use.title}} &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'delete' use.id %}"><input type="button" value="Delete"></a> <br><br>
+
+                {% comment %} <form action="{% url 'delete' use.id %}" method="post">
+                    {% csrf_token %}
+                <input type="submit" value="DELETE">
+                </form> {% endcomment %}
+            {% endfor %}
+        {% endif %}
+        <br>
+            
+        {% else %}
+        <h3>No permission</h3>
+        {% endif %}
+
+        {% if perms.enroll.add_blog %}     <!--here we can use view//change//add in place of delete-->
+            <input type="button" value="Add"><br><br>
+        {% else %}
+        <h3>No Add permission</h3>
+        {% endif %}
+
+        {% if perms.enroll.change_blog %}
+            <input type="button" value="Change"><br><br>
+        {% else %}
+        <h3>No change permission</h3>
+        {% endif %}
+
+        {% if perms.enroll.view_blog %}
+            <input type="button" value="View"><br><br>
+        {% else %}
+        <h3>No View permission</h3>
+        {% endif %}
+        {% comment %} <input type="button" value="Add"> <br><br>
+        <input type="button" value="Change"><br><br> {% endcomment %}
+        {% comment %} <input type="button" value="View"><br><br> {% endcomment %}
+    
+    <br><br>
+        <a href="{% url 'logout' %}"><input type="button" value="Logout"></a>
+        <a href="{% url 'password' %}"><input type="button" value="Change Password"></a>
+        <a href="{% url 'signup' %}"><input type="button" value="GO to signup Page"></a>
+    </center>
+</body>
+</html>

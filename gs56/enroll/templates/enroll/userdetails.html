@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>This is Userdetails Page.</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="SUBMIT">
+        </form>
+        <br><br>
+        {% if messages %}
+            {% for message in messages %}
+                {{message}} <br><br>
+            {% endfor %}
+        {% endif %}
+        <br><br>
+        <a href="{% url 'profile' %}"><input type="button" value="GO to Profile Page"></a>
+    </center>
+</body>
+</html>

@@ -1,0 +1,139 @@
+configuring git:
+        git config --global user.name 'apna name/jis name se github pe account h/HarshRaj709'
+        git config --global user.email 'eamil@gmail.com'
+
+    ab ye dekhne ke liye ki config me humne kya kya setup kiya h hum use krenge.
+
+        git config --list
+
+clone & Status:
+    cloning a repository on our local machine
+    code me click krke HTTPs address copy krle
+
+        git  clone <Http Address>   ------------> git clone https://github.com/HarshRaj709/VideoCall-Django.git
+
+    status  ----    ye btata h ki repo kha pe store thi..
+
+        git status      -On branch main
+                        Your branch is up to date with 'origin/main'.
+
+        if M is showing beside the file that mean we modified the file and not uploaded/updated on git.
+        iske bad humko 2 step krna hota h.  ----1-add (staged) and 2-commit
+Files Status type ----------
+    1.  untracked ----ka matlab hota h git ko nhi pta h iske bare me.
+
+    2.  modified ----- changes has made in a file.
+
+    3.  staged ------ files is ready to committed.
+
+Add and Commit:
+
+    add - adds new or changes files in your working directory to the git staging area.
+
+        git add <file name> // git add . (ye use krte h jab kyi sari files ho tb, main folder ke under )
+
+    commit- It is the record of change.
+
+        git commit -m 'some message'
+
+Push Command:    --- upload local repo content to remote repo.
+        
+        git push origin main        --- yha pe origin ki jagah kuch aur bhi naam kr sakte h.
+
+Init Command:   used to create a new git repo
+
+        git Init                    -------     Initialized empty Git repository in C:/Users/HP/Desktop/git/localRepo/.git/
+
+        git remote add origin <link of new repo>        ----- yha pe hum name set kr rhe origin
+
+        git remote -v (to verify remote)            -------origin  https://github.com/HarshRaj709/geeky_shows (fetch)
+                                                           origin  https://github.com/HarshRaj709/geeky_shows (push)
+
+        git branch  (to check branch)           ---phle master branch hoti thi default but ab main h to abhi humko branch name change krna h.
+
+        git branch -M main  (to rename branch)
+
+        git push origin main        ----    shortcut --- git push -u origin main        //  if want to push in other branch -- git push origin feature1
+
+Work Flow:
+    Local Git:  Github repo > clone > changes > add > commit > push.
+
+
+Git Branches:
+
+        git branch      (to check branch)
+
+        git branch -M main          (to rename branch)
+
+        git checkout <branch name>      (to navigate)   --- dusri branch me jane ke liye 
+
+        git checkout -b <new branch name>   (to create new branch)
+
+        git branch -d < branch name>    (to delete branch)
+
+Merging code
+
+    Way 1:
+            git diff <branch name>      (to compare commits, Branches, files and more)          Use q to quit..
+
+            git merge <branch name>     (to merge 2 branches)   git merge main // when we are in feature1 branch
+
+    way 2:  Through github..
+        Create a PR     --- Pull request    ---     it lets you tell others about changes you've pushed to a branch 
+            in a repository on github.
+
+            1st. compare and pull
+            2nd. add comment then merge.
+            branches get merged in github but not in local system.
+
+Pull Command:   Used to fetch and download content from a remote repo and immediately update the local repo to 
+                match that content.
+
+            git pull origin main    ----    sara github ka updated code aagya h local system me.
+
+Resolving Merge conflict:   An  event that takes place when git is unabe to automatically resolve differences
+                            in code between two commits.    (agar dono branches me same line me difference h to ..)
+
+            we can do this mannually as well as using vscode options..
+
+            mannually---jisko rakna h usko chod ke baki ko hta do..
+
+Undoing Changes:
+    Case1: Staged Changes           only added but not commited
+                git reset <file name>   // if less files
+                git reset               // to reset whole files     
+
+            Reset krne ke bad humko again se add krna hoga nhi to changes nhi dikhega.
+
+    Case2: Commited changes (for one commit)
+                git reset HEAD~1        head~1 ka matlab h ki 1 step piche chle jao, by default last snap ka name head hota h.
+
+                Ab humko Multiple commit piche jana h..
+    Case3: Commited changes (for many commits)
+                git reset <commit hash>
+                git reset --hard <commit hash >
+
+git log: isse sare changes dekh sakte h..           Use q to quit..
+
+
+Fork:   A fork is a new repository that shares code and visibilty settings with the original 'upstream' repository.
+        Fork is rough enough.
+        Iska use hum tb krte h jab hum dusre ke sath work krna chate h.
+
+
+Steps to follow sequentially---
+
+1.  git init
+
+2. git add .
+
+3. git commit -m 'message'
+
+4. git remote add origin <link>
+
+5. git push origin main
+
+
+
+
+

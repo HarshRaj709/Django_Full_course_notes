@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+            {% block content %}  <!--Main content-->
+                <div class="col-sm-10">  <!--this make width of div 10 -->
+                    <h3 class='text-white my-5'>Our Blogs</h3>  <!--my-5 adds margin to both the top and bottom of the element.----------mt-5 adds margin only to the top of the element.-->
+                    {% for post in posts %}
+                        <div class="jumbotron jumbotron-fluid jumbo-color">
+                            <div class="container">
+                                <h1 class="display-4 font-weight-bold">
+                                        {{post.Title}}
+                                </h1>   <!--display-4 sets a large, prominent display style for the <h1> element. It makes the text stand out and appear larger compared to regular headings.-->
+                                <p class="lead">{{post.Description}}</p>  <!--lead increases the font size and line height of the text within the <p> element, making it larger and easier to read. This larger text size helps draw the reader's attention to the content.-->
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endblock content %}

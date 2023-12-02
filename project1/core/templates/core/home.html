@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+    <div class='mt-5'>
+        <div class='text-center'>
+            <img src="{% static 'core/images/harsh.jpeg' %}" alt="profile-pic" 
+        class='img-thumbnail' width='100px' height='10px'>
+        </div>
+        <div class='text-white mx-5 mt-5 text-justify'>
+            <h1 class='st-font font-weight bold text-warning'>Hello,</h1>
+            <div class='px-4' style='line-height:2rem'>
+                <p style='text-indent:100px;'>
+                    Lorem ipsum dolor sit amet <b class='text-warning st-font'>Harsh </b>consectetur adipisicing elit. Soluta inventore voluptatum in laborum pariatur obcaecati aliquid sint. Est voluptates dolor illum, perspiciatis repellendus rem eligendi incidunt modi, quis, repellat quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem harum vero vel? Blanditiis quaerat accusamus eum harum dolores quas, <br>
+                    adipisci totam animi magnam et ipsa labore consequatur architecto quisquam aliquid! <br>
+                    <br>
+                    
+                </p>
+            </div>
+        </div>
+        <div class='text-center'>
+            <a href="{% url 'contact'%}" class="btn btn-outline-warning my-3 mr-5">Hire Me</a>
+        <a href="{% url 'contact'%}" class="btn btn-outline-info my-3">Contact</a>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title%}</title>
+    {% block css %}<link rel="stylesheet" href="{% static 'core/css/style.css' %}">{% endblock css %}
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">home</a></li>
+            <li><a href="/cor/cor/">course</a></li>
+            <li><a href="{% url 'fees' %}">fees</a></li>
+            <li><a href="{% url 'about' %}">about</a></li>
+        </ul>
+    </nav>
+    {% block content%}<h1>hello this is default value</h1>{% endblock content %}
+</body>
+</html>

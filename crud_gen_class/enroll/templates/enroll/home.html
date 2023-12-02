@@ -1,0 +1,57 @@
+{% extends 'enroll/base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+{% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Awesome!</strong> {{message}}
+              </div>
+            {% endfor %}
+{% endif %} 
+    
+    <div class="row">
+        <div class="col-sm-4">
+            <h4 class="alert alert-info text-center">Add New Student</h4>
+            <form action="" method="post" novalidate>
+                {% csrf_token %}
+                    {% for fm in form %}
+                        {{fm.label_tag}}{{fm}} <span class="alert-danger">{{fm.errors|striptags}}</span> <br>
+                    {% endfor %}
+                    {% comment %} {{form.as_p}} {% endcomment %}
+                    <input type="submit" value="Add" class='btn btn-success text-center'>
+            </form>
+        </div>
+        <div class="col-sm-7 offset-1">
+            <h2 class="aler alert-info text-center p-2">Show Student Information</h2>
+            {{info.id}}
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password</th>
+                    <th scope='col'>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for st in info %}
+                    <tr>
+                      <th scope="row">{{st.id}}</th>
+                      <td>{{st.Name}}</td>
+                      <td>{{st.Email}}</td>
+                      <td>{{st.Password}}</td>
+                      <td><a href="{% url 'Infoedit' st.id %}"><input type="button" value="Edit" class='btn btn-warning'></a>
+                        <form action="{% url 'deleteinfo' st.id %}" method="post" class='d-inline'>
+                            {% csrf_token %}
+                            <input type="submit" value="Delete" class='btn btn-danger text-center'>
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+{% endblock content %}

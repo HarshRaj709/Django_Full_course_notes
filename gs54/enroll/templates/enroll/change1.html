@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            background-color:red;
+        }
+        .errorlist{
+            color:red;
+        }
+        form{
+            height:50%;
+            width:50%;
+            box-shadow:5px 5px 10px black;
+            {% comment %} background-color:white; {% endcomment %}
+        }
+        .message{
+            color: blue;
+        }
+    </style>
+    <title>Password Change</title>
+</head>
+<body><center>
+    <h1>This is password change form without old password.</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% comment %} {{form.as_p}} {% endcomment %}
+        {% for fm in form %}
+            {{fm.label_tag}}
+            {{fm}}
+            {{fm.errors|striptags}} <br><br>
+        {% endfor %}
+        <input type="submit" value="SUbmit">
+    </form>
+    <br><br>
+    <a href="{% url 'profile' %}"><input type="button" value="Dont want to change? Move to Profile Page"></a>
+</center>
+</body>
+</html>
