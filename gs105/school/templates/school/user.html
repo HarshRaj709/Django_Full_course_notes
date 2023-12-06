@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>User creation FOrm</h1>
+    <hr>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% comment %} {{stu.as_p}} {% endcomment %}
+        {{form.as_p}}
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <a href="{% url 'all' %}"><input type="submit" value="Check all students list"></a>
+</body>
+</html>
