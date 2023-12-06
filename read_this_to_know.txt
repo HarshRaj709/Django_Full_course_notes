@@ -5712,6 +5712,60 @@ a template. This view is useful when you want to display a simple HTML page with
 processing in the view itself. TemplateView simplifies the process of rendering a template and passing context
 data to it.
 
+Attributes:
+      
+template_name (optional):
+      The name of the template to be rendered. This is a required attribute, and you need to specify the template that should be used.
+
+extra_context (optional):
+      A dictionary containing additional context data to be added to the template context.
+      
+content_type (optional):
+      The content type of the response. Defaults to 'text/html'.
+      
+response_class (optional):
+      The class to be used for the HTTP response. Defaults to HttpResponse.
+      
+name (optional):
+      A unique identifier for the view. This is often used in reverse URL resolution.
+      
+http_method_names (optional):
+      A list of HTTP methods that the view can handle. Defaults to ['get'].
+
+
+
+                              -------------> Example <------------------
+
+            from django.views.generic import TemplateView
+            from django.http import HttpResponse
+
+            class MyTemplateView(TemplateView):
+                  template_name = 'my_template.html'
+                  extra_context = {'extra_variable': 'Extra Value'}
+                  content_type = 'text/html'
+                  response_class = HttpResponse
+                  name = 'my-template-view'
+                  http_method_names = ['get']
+
+                  def get_context_data(self, **kwargs):
+                        context = super().get_context_data(**kwargs)
+                        # Additional context data can be added here
+                        context['additional_variable'] = 'Additional Value'
+                        return context
+
+                  def render_to_response(self, context, **response_kwargs):
+                        # Custom rendering logic can be added here
+                        return super().render_to_response(context, **response_kwargs)
+
+            # URLs configuration in urls.py
+            from django.urls import path
+
+            urlpatterns = [
+            path('my-template/', MyTemplateView.as_view(), name='my-template-view'),
+            ]
+
+
+
 ------------> urls.py Sirf itne se hi chal jayega..
 
                   from django.contrib import admin
@@ -5950,9 +6004,9 @@ data to it.
 2.    DetailView, 
 3.    Editing View
       1.    FormView, 
-      2.    UpdateView, 
-      3.    DeleteView.
-      4.    CreateView
+      2.    CreateView
+      3.    UpdateView
+      4.    DeleteView
 
 ------>They are designed to simplify the development of common patterns like displaying lists of objects, showing 
             details of an object, handling form submissions, etc.
@@ -6617,3 +6671,128 @@ Ans. 1st method se krne pe nhi ayengi classes.
             Models se form bna ke usme class lgade attrs ke through
 
                   widgets = {'name':forms.TextInput(attrs={'class':'mytext'})}
+
+----------------------------------------------------------------------------------------------------------------
+
+            ----------------> gs-105 Editing View- DeleteView <-------------------
+
+      In Django, DeleteView is a class-based view that provides an easy way to display a confirmation page and 
+      delete an object. It is commonly used for deleting instances of a model from a database. Here are the 
+      attributes and methods of the DeleteView class along with a brief explanation of each:
+
+Attributes:
+
+model (optional):
+      The model to be deleted. If not provided, you need to override the get_queryset method.
+      
+template_name (optional):
+      The name of the template to be used for rendering the delete confirmation page.
+      
+success_url (optional):
+      The URL to redirect to after the object is successfully deleted. If not provided, the get_success_url method must be overridden.
+      
+context_object_name (optional):
+      The name of the variable to use in the template context to represent the object being deleted.
+
+pk_url_kwarg (optional):
+      The name of the URL pattern keyword argument that contains the primary key value of the object to be deleted.
+
+
+                        ------------------------------>  Methods: <-------------------------------
+**get(self, request, *args, kwargs):
+      Handles GET requests and renders the confirmation page.
+
+**post(self, request, *args, kwargs):
+      Handles POST requests and performs the actual deletion of the object.
+            
+**delete(self, request, *args, kwargs):
+      Deletes the object and returns an HTTP response.
+      
+get_object(self, queryset=None):
+      Retrieves the object to be deleted. By default, it uses the primary key from the URL to fetch the object.
+      
+get_queryset(self):
+      Returns the queryset of objects that can be deleted. By default, it uses the model attribute or the queryset attribute if provided.
+      
+**get_context_data(self, kwargs):
+      Adds additional data to the template context. By default, it includes the object being deleted.
+      
+get_success_url(self):
+      Returns the URL to redirect to after a successful deletion. By default, it uses the success_url attribute.
+
+
+                  ---------------------------> Practical Approach <-------------------------
+
+      from typing import Any
+      from django.shortcuts import render
+      from .models import Student
+      from django.views.generic import CreateView,TemplateView,UpdateView,ListView,DeleteView
+      from django import forms
+
+      # Create your views here.
+      class StudentCreate(CreateView):
+            model = Student
+            template_name = 'school/user.html'
+            success_url = '/success/'
+            fields = [field.name for field in Student._meta.fields]
+            # context_object_name = 'stu'       #not working...
+
+            def get_form(self):
+                  form = super().get_form()
+                  form.fields['name'].widget = forms.TextInput(attrs={'class':'mytext'})
+                  form.fields['password'].widget = forms.PasswordInput(attrs={'class':'mypass'})
+                  return form
+            
+            def get_context_data(self, **kwargs):
+                  return super().get_context_data(**kwargs)
+      
+      class StudentUpdate(UpdateView):
+            model = Student
+            fields = [field.name for field in Student._meta.fields]
+            # default template name = school/student_form.html
+            template_name = 'school/update.html'
+            success_url = '/updated/'
+
+            def get_form(self):
+                  form = super().get_form()
+                  form.fields['name'].widget = forms.TextInput(attrs={'class':'mytext'})
+                  form.fields['password'].widget = forms.PasswordInput(render_value=True,attrs={'class':'mypass'})
+                  return form
+
+      class updated(TemplateView):
+            pass
+
+
+      class Success(TemplateView):
+            model = Student
+            template_name = 'school/success.html'
+
+            def get_context_data(self, **kwargs):
+                  context = super().get_context_data(**kwargs)
+                  context['all'] = self.model.objects.all()
+                  return context
+
+
+      class Allstudents(ListView):
+            model = Student
+            template_name = 'school/allstudent.html'
+            context_object_name = 'students'
+
+      class StudentDelete(DeleteView):
+            model = Student                       # StudentDelete is missing a QuerySet. Define StudentDelete.model, StudentDelete.queryset, or override StudentDelete.get_queryset().
+            template_name = 'school/delete.html' # default Template_name = school/student_confirm_delete.html
+            success_url = '/deletesuccess/'
+            # context_object_name = 'user'          # default context_object_name = 'student'
+
+
+
+      class StudentConfirm(TemplateView):
+            model = Student
+            template_name = 'school/allstudent.html'            
+
+    
+------------------------------------------------------------------------------------------------------------------
+
+
+            ----------------------> Authentication Views with Function Based Class <--------------------
+
