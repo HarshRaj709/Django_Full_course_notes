@@ -209,6 +209,21 @@ SOME IMPORTANT QUESTIONS----
                         list_display = [field.name for field in Student._meta.fields]
 
 
+      Ques 8. How to show data in template which was created through TemplateView ?
+      Ans 8. Just add model name where all data is stored.
+
+            then use method get_context_data and then pass it to template..
+
+                  class Success(TemplateView):
+                        model = Student
+                        template_name = 'school/success.html'
+
+                        def get_context_data(self, **kwargs):
+                              context = super().get_context_data(**kwargs)
+                              context['all'] = self.model.objects.all()
+                              return context
+
+
 
                         --------------------> git uploading Steps <-------------------
 
@@ -5929,7 +5944,15 @@ data to it.
 ----->These views are built by combining and extending the functionality of base classes to handle common patterns 
             and tasks.
 
------>Examples of generic class-based views include ListView, DetailView, CreateView, UpdateView, and DeleteView.
+----->Examples of generic class-based views include 
+
+1.    ListView, 
+2.    DetailView, 
+3.    Editing View
+      1.    FormView, 
+      2.    UpdateView, 
+      3.    DeleteView.
+      4.    CreateView
 
 ------>They are designed to simplify the development of common patterns like displaying lists of objects, showing 
             details of an object, handling form submissions, etc.
@@ -6076,3 +6099,521 @@ html
                   </table>
 -----------------------------------------------------------------------------------------------------------------
 
+                        -----------------> gs98 - DetailView <--------------------
+
+      
+      In Django, a "DetailView" is a class-based view that displays the details of a single object. It's commonly 
+      used when you want to show the details of a specific database record or object on a web page. 
+      DetailViews are particularly useful when you're working with models and want to create pages that show 
+      detailed information about individual instances of those models.
+
+Attributes:
+model:
+      The model class associated with this view. Should be set to the model whose instances you want to display details for.
+      
+template_name:
+      The name of the template to be used for rendering the details. Can be a string or a list of strings.
+      
+context_object_name:
+      The name of the context variable containing the object in the template. Defaults to the lowercase name of the model.
+      
+pk_url_kwarg:
+      The name of the URL pattern keyword argument that contains the primary key. Defaults to 'pk'.
+      
+queryset:
+      The queryset that is used to fetch the object. By default, it is model.objects.all().
+
+
+-----> isme humko primary key ka slug dena hi hoga url me....
+-----> ListView me humko Lists mil jati h sare objects ki, iSme hume 1 object ka details mil jata h
+
+                                    ----> Steps <----
+
+      1.create models
+      2.create views code..
+      3.create html files
+
+-----------> Views.py
+                  class Studentlist(ListView):
+                        model = Student
+                        template_name = 'school/home.html'
+                        context_object_name = 'students'
+
+                  class StudentDetails(DetailView):
+                        model = Student
+                        template_name = 'school/harsh.html'      #default---student_detail.html
+                        context_object_name = 'stu'        #default---student_detail
+                        pk_url_kwarg = 'id'
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+                  --------------> gs-99   Methods in DetailView <---------------
+
+Methods:
+      
+get_queryset(self):
+      Override this method to customize the queryset used to fetch the object. By default, it returns self.model.objects.all().
+
+get_object(self, queryset=None):
+      Retrieves the object that this view displays. It uses the primary key captured from the URL to fetch the 
+      object from the queryset.
+      
+**get(self, request, *args, kwargs):
+      Handles GET requests. Calls get_object to retrieve the object and renders the template with the object as 
+      context.
+
+**get_context_data(self, kwargs):
+      Adds extra context data to be used in the template. By default, it includes the object as the context 
+      variable specified by context_object_name.
+
+**render_to_response(self, context, response_kwargs):
+      Renders the template with the given context and returns an HttpResponse.
+
+-------------------> Practical Approach
+
+
+            from typing import Any
+            from django.shortcuts import render
+            from .models import Student
+            from django.views.generic import ListView,DetailView
+
+
+            class Studentlist(ListView):
+                  model = Student
+                  template_name = 'school/home.html'
+                  context_object_name = 'students'
+
+            class StudentDetails(DetailView):
+                  model = Student
+                  template_name = 'school/harsh.html'      #default---student_detail.html
+                  # context_object_name = 'stu'        #default---student       {{stu.id}}
+                  pk_url_kwarg = 'id'         #agar humko urls me pk ki jagah 'id' likhna h to hume yha pe changes krna hoga..
+
+                  #ab iske methods
+
+                  def get_context_data(self,*args,**kwargs):
+                        context = super().get_context_data(**kwargs)
+
+                        context['all_students'] = self.model.objects.all().order_by('name')
+                        return context
+
+      
+------------------------------------------------------------------------------------------------------------------
+
+                  ------------->gs-100 Editing View ---- FormView <-----------
+
+      In Django, the FormView is a class-based view used for displaying and processing forms. It is part of 
+      Django's generic views and is particularly useful when you need to render a form, handle form submission, 
+      and provide validation logic.
+
+
+Methods:
+**get(self, request, *args, kwargs):
+      Handles GET requests and renders the form.
+
+**post(self, request, *args, kwargs):
+      Handles POST requests and processes form submissions. It validates the form data and, if valid, 
+      performs the form-specific actions defined in the form_valid method.
+      
+form_valid(self, form):
+      Called when the form is successfully validated. Override this method to define what should happen when the 
+      form is valid. By default, it redirects to the success_url.
+      
+form_invalid(self, form):
+      Called when the form is invalid. Override this method to define what should happen when the form is not 
+      valid. By default, it re-renders the form with the validation errors.
+      
+get_form_class(self):
+      Returns the form class to use. Override this method to provide a custom form class.
+      
+get_form_kwargs(self):
+      Returns the keyword arguments to use when instantiating the form. Override this method to customize the 
+      instantiation of the form.
+      
+get_success_url(self):
+      Returns the URL to redirect to after a successful form submission. Override this method to provide a custom 
+      success URL.
+
+
+Attributes:
+
+form_class:
+      The form class to use for rendering and processing the form.
+      
+template_name:
+      The name of the template to use for rendering the form.
+      
+success_url:
+      The URL to redirect to after a successful form submission.
+      
+initial:
+      A dictionary of initial data for the form.
+      
+prefix:
+      A prefix to use when rendering the form. This is useful when you have multiple forms on the same page.
+
+    
+-------------------> Practical Approach
+
+
+1.    Create Forms.py
+2.    Write code in VIews.py
+3.    make its Urls..
+
+------------> Forms.py
+            from django import forms
+
+            class Contact(forms.Form):
+                  name = forms.CharField()
+                  email = forms.EmailField()
+                  msg = forms.CharField(widget = forms.Textarea)
+
+----------->Views.py
+
+            from django.shortcuts import render,HttpResponse
+            from .forms import Contact
+            from django.views.generic import FormView,TemplateView
+
+            # Create your views here.
+            class ContactFormView(FormView):
+                  template_name = 'school/contact.html'       #default nhi h but humko template_name dena hi hpga..
+                  form_class = Contact        # konse form ko render krna h?
+                  success_url = '/thankyou/'          #ye bhi dena h ki Form data send hone ke bad kha jaye?
+                  initial = {'name':'harsh Saahu'}        #placeholder value ki tarah hi h, initially fill ho kr ayega.
+                  
+                  def form_valid(self,form):
+                        # print(form)
+                        name = form.cleaned_data['name']
+                        print(name)
+                        return super().form_valid(form)       #isse humara thankyou link chal rhi h. important because it allows the default behavior defined in the FormView class to be executed.
+                        # return HttpResponse('thanks')
+
+            class ThankyouTemp(TemplateView):
+                  template_name = 'school/thanks.html'
+
+------------> urls.py
+
+            from django.urls import path
+            from . import views
+
+            urlpatterns = [
+                  path('',views.ContactFormView.as_view(),name='home'),
+                  path('thankyou/',views.ThankyouTemp.as_view(),name='thanks'),
+            ]
+
+----------------------------------------------------------------------------------------------------------------
+
+                  -------------------> gs-101 Editing View ---- CreateView <-------------
+
+      In Django, the CreateView is another class-based view that is used for displaying a form for creating an 
+      object and handling the submission of that form. It is part of Django's generic views and is commonly used 
+      when you want to simplify the process of creating new instances of a model.
+
+
+Attributes:
+model:
+      The model class associated with this view. Should be set to the model for which you want to create instances.
+      
+form_class:
+      The form class to use for rendering and processing the form.
+      
+template_name:
+      The name of the template to use for rendering the form.
+      
+success_url:
+      The URL to redirect to after a successful form submission.
+      
+initial:
+      A dictionary of initial data for the form.
+      
+prefix:
+      A prefix to use when rendering the form. This is useful when you have multiple forms on the same page.
+
+
+----------------> Methods
+
+**get(self, request, *args, kwargs):
+      Handles GET requests and renders the form for creating a new object.
+      
+**post(self, request, *args, kwargs):
+      Handles POST requests and processes form submissions. It validates the form data, creates a new object if the form is valid, and redirects to the success URL.
+      
+form_valid(self, form):
+      Called when the form is successfully validated. It is responsible for creating the new object and returning an HTTP response. By default, it redirects to the success_url.
+      
+form_invalid(self, form):
+      Called when the form is invalid. Override this method to define what should happen when the form is not valid. By default, it re-renders the form with the validation errors.
+      
+get_form_class(self):
+      Returns the form class to use. Override this method to provide a custom form class.
+      
+get_form_kwargs(self):
+      Returns the keyword arguments to use when instantiating the form. Override this method to customize the instantiation of the form.
+      
+get_success_url(self):
+      Returns the URL to redirect to after a successful form submission. Override this method to provide a custom success URL.
+
+
+------------------------> models.py
+
+            from django.db import models
+
+            # Create your models here.
+            class Student(models.Model):
+                  name = models.CharField(max_length=70)
+                  email = models.EmailField()
+                  password = models.CharField(max_length=70)
+
+-------------------------> Views.py
+
+            from typing import Any
+            from django.shortcuts import render
+            from django.views.generic import CreateView,TemplateView
+            from .models import Student
+
+            # Create your views here.
+            class StudentCreateView(CreateView):
+                  model = Student                     #isse humara data save ho jata h..
+                  fields = [field.name for field in Student._meta.fields]
+                  success_url = '/success/'           # success_url='/'   to return at same page.
+
+                  def form_valid(self, form):
+                        name = form.cleaned_data['name']
+                        print(name)
+                        return super().form_valid(form)
+
+
+
+
+            class success(TemplateView):
+            template_name = 'school/success.html'
+
+-----------------> Urls.py
+
+      from django.urls import path
+      from . import views
+
+      urlpatterns = [
+            path('',views.StudentCreateView.as_view(template_name='school/forms.html'),name='form'),
+            path('success/',views.success.as_view(),name='success'),
+      ]
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------
+
+            ----------------> gs102- How to add bootstrap classes in createView Form <------------------
+
+
+2 ways to add Class in elements---->
+
+      1st.  Using get_form() method:
+
+
+                  from typing import Any
+                  from django.shortcuts import render
+                  from django.views.generic import CreateView,TemplateView
+                  from .models import Student
+                  from django import forms
+
+                  # Create your views here.
+                  class StudentCreateView(CreateView):
+                        model = Student                     #isse humara data save ho jata h..
+                        fields = [field.name for field in Student._meta.fields]
+                        success_url = '/success/'           # success_url='/'   to return at same page.
+
+                        def get_form(self):
+                              form = super().get_form()
+                              form.fields['name'].widget = forms.TextInput(attrs={'class':'myclass'})
+                              form.fields['password'].widget = forms.PasswordInput(attrs={'class':'mypass'})
+                              return form
+
+
+
+                  class success(TemplateView):
+                  template_name = 'school/success.html'
+
+      ------------------------------------------------------------------------------------------------------
+
+      2nd. MEthod:
+
+            steps:
+                  1. Isme sabse phle models ke through form bna lenge usko simply render krdenge views me.
+                  Same jese hum normal me krte the...
+
+            ------> Forms.py
+                        from django import forms
+                        from .models import Student
+
+                        class StudentForm(forms.ModelForm):
+                        class Meta:
+                              model = Student
+                              # fields = '__all__'
+                              fields = ['name','password','email']
+                              widgets = {'name':forms.TextInput(attrs={'class':'mytext'}),
+                                          'password':forms.PasswordInput(attrs={'class':'mypass'})}
+
+            ------> Views.py
+                        from django.shortcuts import render
+                        from django.views.generic import CreateView,TemplateView
+                        from .models import Student
+                        from django import forms
+                        from .forms import StudentForm
+                        
+                        class StudentCreateView(CreateView):
+                        form_class = StudentForm
+                        success_url = '/success/'
+                        #isme humko template ka name dena hi hoga default nhi lega wo 
+
+                        class success(TemplateView):
+                        template_name = 'school/success.html'
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+            -------------------->  gs103 Editing View--UpdateView <-----------------
+
+      In Django, the `UpdateView` class is part of the generic class-based views (CBVs) and is used to display a 
+      form for updating an existing object and then saving the changes. It simplifies the process of handling form 
+      submissions for updating objects.
+
+      Here's an overview of the `UpdateView` class along with its attributes and methods:
+
+                        ------------> UpdateView` Attributes <----------------
+
+1. **model (required):**
+      - The model associated with the view. It defines which model the view will be updating.
+
+2. **template_name (optional):**
+      - The name of the template to be used for rendering the view.
+
+3. **form_class (optional):**
+      - The form class to be used for displaying and processing the update form.
+
+4. **success_url (required):**
+      - The URL to redirect to after a successful form submission.
+
+5. **pk_url_kwarg (optional):**
+      - The name of the keyword argument to use for the primary key value from the URL.
+
+                        ------------->`UpdateView` Methods <----------------
+
+
+1. **get(self, request, *args, **kwargs):**
+      - Handles GET requests and renders the update form.
+
+2. **post(self, request, *args, **kwargs):**
+      - Handles POST requests, validates the form, and saves the updated object.
+
+3. **get_object(self, queryset=None):**
+      - Retrieves the object to be updated. It uses the primary key passed in the URL.
+
+4. **form_valid(self, form):**
+      - Called when the form is successfully validated. Saves the updated object and redirects to `success_url`.
+
+5. **form_invalid(self, form):**
+      - Called when the form validation fails. Renders the form again with error messages.
+
+6. **get_context_data(self, **kwargs):**
+      - Adds additional context data to be passed to the template.
+
+                               --------------> Example <-------------------
+
+      from django.views.generic.edit import UpdateView
+      from .models import YourModel
+      from .forms import YourFormClass
+
+      class YourUpdateView(UpdateView):
+            model = YourModel
+            template_name = 'your_template.html'
+            form_class = YourFormClass
+            success_url = '/success/'
+            pk_url_kwarg = 'your_pk_name'
+
+------------------------------> Practical Approach
+
+      isme humko updateView ki url me pk//id dena hoga tabhi to verify hoga..
+
+      -------------> models.py
+
+                  from django.db import models
+
+                  # Create your models here.
+                  class Student(models.Model):
+                        name = models.CharField(max_length=70)
+                        email  = models.EmailField()
+                        password = models.CharField(max_length=70)
+
+      -------------> Views.py
+
+                  from typing import Any
+                  from django.shortcuts import render
+                  from .models import Student
+                  from django.views.generic import CreateView,TemplateView,UpdateView,ListView
+                  from django import forms
+
+                  # Create your views here.
+                  class StudentCreate(CreateView):
+                        model = Student
+                        template_name = 'school/user.html'
+                        success_url = '/success/'
+                        fields = [field.name for field in Student._meta.fields]
+                        # context_object_name = 'stu'       #not working...
+
+                        def get_form(self):
+                              form = super().get_form()
+                              form.fields['name'].widget = forms.TextInput(attrs={'class':'mytext'})
+                              form.fields['password'].widget = forms.PasswordInput(render_value=True,attrs={'class':'mypass'})      #render_value se hi humara password dikhega edit krne ke liye.
+                              return form
+                        
+                        def get_context_data(self, **kwargs):
+                              return super().get_context_data(**kwargs)
+                        
+                        class StudentUpdate(UpdateView):
+                        model = Student
+                        fields = [field.name for field in Student._meta.fields]
+                        # default template name = school/student_form.html
+                        template_name = 'school/update.html'
+                        success_url = '/updated/'
+
+                  class updated(TemplateView):
+                        pass
+
+
+                  class Success(TemplateView):
+                        model = Student
+                        template_name = 'school/success.html'
+
+                        def get_context_data(self, **kwargs):
+                              context = super().get_context_data(**kwargs)
+                              context['all'] = self.model.objects.all()
+                              return context
+
+
+                  class Allstudents(ListView):
+                  model = Student
+                  template_name = 'school/allstudent.html'
+                  context_object_name = 'students'
+
+      ------------------------------------------------------------------------------------------------------------
+
+
+            ------------------> gs104 checking/adding  classes in UpdateView <------------------
+
+
+------> Abhi hum dekhenge ki kese hum UpdateView Form me classes lgayenge ,,,
+            check krenge ki kya humare form ki classes isme inherit ho kr khud aarhi h.
+
+Ans. 1st method se krne pe nhi ayengi classes.
+
+            def get_form(self)-----isse nhi ayengi 
+
+      2nd method se aajyengi..
+
+            Models se form bna ke usme class lgade attrs ke through
+
+                  widgets = {'name':forms.TextInput(attrs={'class':'mytext'})}
