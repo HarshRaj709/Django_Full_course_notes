@@ -6922,5 +6922,140 @@ step 6. If we want to redirect any other page rather than profile page after log
 
 
 
+------------------------------------------------------------------------------------------------------------------
+
+                  -------------------> gs107 login_required Decorator <------------------
+
+      here we learned about Decorators..
+
+1. @login_required           --------------   from django.contrib.auth.decorators import login_required
+
+2. @staff_member_required    -------------- from django.contrib.admin.views.decorators import staff_member_required
+
+3. permission_required       --------------  from django.contrib.auth.decorators import permission_required
+
+4. @user_passes_test         --------------     from django.contrib.auth.decorators import user_passes_test
 
 
+--------------views.py
+
+            from django.shortcuts import render
+            from django.contrib.auth.decorators import login_required,user_passes_test
+            from django.contrib.admin.views.decorators import staff_member_required
+
+            # Create your views here.
+            # @login_required
+            def home(request):
+                  return render(request,'registration/home.html')
+
+            @login_required
+            def profile(request):
+                  return render(request,'registration/profile.html')
+
+            # @staff_member_required
+
+            def is_staff_member(user):
+                  return user.is_staff
+
+            @user_passes_test(is_staff_member,login_url='/normal_about/')       #here we check that if user is staffmember only then go to that function. 
+            def about(request):
+                  return render(request,'registration/about.html')        #isme agar humara login nhi h to admin login pr redirect krega.
+
+
+            def normal_about(request):
+                  return render(request,'registration/normal_about.html')
+
+-------------> urls.py 
+
+                  from django.urls import path
+                  from . import views
+
+                  urlpatterns = [
+                        path('',views.home,name='home'),
+                        path('profile/',views.profile,name='profile'),
+                        path('about/',views.about,name='about'),
+                        path('normal_about/',views.normal_about,name='normal')
+                  ]
+
+
+------------------------------------------------------------------------------------------------------------------
+
+                  ------------> gs108 Class based Authentication Views  with Decorators <-------------
+
+      we can use decorators in class based views through 3 ways..
+
+1.    Decorating in urls.py or URLconf:
+                  Just add login_required in urls.py...
+
+      --------------> Urls.py
+
+                  from django.urls import path
+                  from . import views
+                  from django.contrib.auth.decorators import login_required
+
+                  urlpatterns = [
+                        path('',views.home.as_view(),name='home'),
+                        path('profile/',login_required(views.Profile.as_view()),name='profile'),
+                  ]
+
+2.    By converting Decorators to method Decorators
+            First we need to import method decorators
+
+                  from django.utils.decorators import method_decorator
+
+                  
+                  @method_decorator(login_required,name='dispatch')
+                  class Contact(TemplateView):
+                        template_name = 'registration/contact.html'
+
+      
+      ------------------> Views.py
+
+                  from django.shortcuts import render,HttpResponse
+                  from django.views.generic import TemplateView,ListView
+                  from django.contrib.auth.models import User
+                  from django.utils.decorators import method_decorator
+                  from django.contrib.auth.decorators import login_required
+
+
+                  # Create your views here.
+                  # def home(request):
+                  #     return HttpResponse('this is home page')
+
+                  class home(TemplateView):
+                        template_name = 'registration/home.html'
+
+
+                  class Profile(TemplateView):
+                        model = User
+                        template_name = 'registration/profile.html'
+
+                        def get_context_data(self, **kwargs):
+                              context = super().get_context_data(**kwargs)
+                              context["all_user"] = self.model.objects.all() 
+                              return context
+                  
+                  class About(TemplateView):
+                        template_name = 'registration/about.html'
+
+                  @method_decorator(login_required,name='dispatch')
+                  class Contact(TemplateView):
+                        template_name = 'registration/contact.html'
+
+
+      ---------------------------> Urls.py
+
+                  from django.urls import path
+                  from . import views
+                  from django.contrib.auth.decorators import login_required
+                  from django.contrib.admin.views.decorators import staff_member_required
+
+                  urlpatterns = [
+                        path('',views.home.as_view(),name='home'),
+                        path('profile/',login_required(views.Profile.as_view()),name='profile'),
+                        path('about/',login_required(views.About.as_view()),name='about'),
+                        # path('about/',staff_member_required(views.About.as_view()),name='about'),
+                        path('contact/',views.Contact.as_view(),name='contact')
+                  ]
+
+      
