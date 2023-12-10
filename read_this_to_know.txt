@@ -5627,9 +5627,9 @@ class Recipe(models.Model):
                         def get(self,request):          #jab bhi hum koi rquest krte h to get method ke through aata h.
                               return render(request,'school/class.html')
                   
-                  def about(request):
-                        context = {'msg':'Function Based views'}
-                        return render(request,'school/about.html',context)
+                        def about(request):
+                              context = {'msg':'Function Based views'}
+                              return render(request,'school/about.html',context)
 
                   class About(View):
                         def get(self,request):
@@ -5637,16 +5637,16 @@ class Recipe(models.Model):
                               return render(request,'school/about.html',context)
                   
 
-                  def contact(request):
-                        if request.method=='POST':
-                              form = ContactForm(request.POST)
-                              if form.is_valid():
-                                    print(form.cleaned_data['name'])
-                                    return HttpResponse('Thankyou Form submitted')
-                              
-                        else:
-                              form = ContactForm()
-                        return render(request,'school/contact.html',{'form':form})
+                        def contact(request):
+                              if request.method=='POST':
+                                    form = ContactForm(request.POST)
+                                    if form.is_valid():
+                                          print(form.cleaned_data['name'])
+                                          return HttpResponse('Thankyou Form submitted')
+                                    
+                              else:
+                                    form = ContactForm()
+                              return render(request,'school/contact.html',{'form':form})
 
 
                   class Contact(View):
@@ -5666,10 +5666,10 @@ class Recipe(models.Model):
                   #     return render(request,template,context)
 
 
-                  def news(request,template):         #passing templates through urls.py
-                        # template = 'school/news.html'
-                        context={'info':'Earning money is important to sustain.'}
-                        return render(request,template,context)
+                        def news(request,template):         #passing templates through urls.py
+                              # template = 'school/news.html'
+                              context={'info':'Earning money is important to sustain.'}
+                              return render(request,template,context)
 
 
                   # class News(View):
@@ -6017,30 +6017,7 @@ http_method_names (optional):
             ----------------------------------->gs96- List views <--------------------------------------------
 
 
-
-      In Django, a list view is a type of view that displays a list of objects, typically from a queryset. 
-      Django provides a generic class-based view called `ListView` that simplifies the implementation of list views.
-      Here's an overview of how to use `ListView`:
-
-            from django.views.generic import ListView
-            from .models import YourModel
-
-            class YourModelListView(ListView):
-                  model = YourModel
-                  template_name = 'your_model_list.html'  # Specify the template for rendering the list
-                  context_object_name = 'your_model_list'  # Specify the variable name for the list in the template
-                  ordering = ['-date_field']  # Optionally, specify the default ordering of the list
-
-      # urls.py
-            from django.urls import path
-            from .views import YourModelListView
-
-            urlpatterns = [
-                  path('your-model-list/', YourModelListView.as_view(), name='your_model_list'),
-            ]
-
-
-Explanation:
+Attributes:
 
       - `model`: Set the model from which the list will be generated.
 
@@ -6052,6 +6029,28 @@ Explanation:
 
       - `ordering`: Optionally, set the default ordering for the list. In the example, it orders the list by the 
             `date_field` attribute in descending order.
+
+      In Django, a list view is a type of view that displays a list of objects, typically from a queryset. 
+      Django provides a generic class-based view called `ListView` that simplifies the implementation of list views.
+      Here's an overview of how to use `ListView`:
+
+            from django.views.generic import ListView
+            from .models import YourModel
+
+            class YourModelListView(ListView):
+                  model = YourModel
+                  template_name = 'your_model_list.html'  # Specify the template for rendering the list
+                  context_object_name = 'modlename_list'  # Specify the variable name for the list in the template
+                  ordering = ['-date_field']  # Optionally, specify the default ordering of the list
+
+      # urls.py
+            from django.urls import path
+            from .views import YourModelListView
+
+            urlpatterns = [
+                  path('your-model-list/', YourModelListView.as_view(), name='your_model_list'),
+            ]
+
 
       In the template (`your_model_list.html`), you can then loop through the list using the specified 
       variable name:
@@ -6293,19 +6292,19 @@ get_success_url(self):
 Attributes:
 
 form_class:
-      The form class to use for rendering and processing the form.
-      
+            The form class to use for rendering and processing the form.
+            
 template_name:
-      The name of the template to use for rendering the form.
-      
+            The name of the template to use for rendering the form.
+            
 success_url:
-      The URL to redirect to after a successful form submission.
-      
+            The URL to redirect to after a successful form submission.
+            
 initial:
-      A dictionary of initial data for the form.
-      
+            A dictionary of initial data for the form.
+            
 prefix:
-      A prefix to use when rendering the form. This is useful when you have multiple forms on the same page.
+            A prefix to use when rendering the form. This is useful when you have multiple forms on the same page.
 
     
 -------------------> Practical Approach
@@ -6421,7 +6420,6 @@ get_success_url(self):
 
 -------------------------> Views.py
 
-            from typing import Any
             from django.shortcuts import render
             from django.views.generic import CreateView,TemplateView
             from .models import Student
@@ -6604,7 +6602,6 @@ get_success_url(self):
 
       -------------> Views.py
 
-                  from typing import Any
                   from django.shortcuts import render
                   from .models import Student
                   from django.views.generic import CreateView,TemplateView,UpdateView,ListView
@@ -6628,11 +6625,11 @@ get_success_url(self):
                               return super().get_context_data(**kwargs)
                         
                         class StudentUpdate(UpdateView):
-                        model = Student
-                        fields = [field.name for field in Student._meta.fields]
-                        # default template name = school/student_form.html
-                        template_name = 'school/update.html'
-                        success_url = '/updated/'
+                              model = Student
+                              fields = [field.name for field in Student._meta.fields]
+                              # default template name = school/student_form.html
+                              template_name = 'school/update.html'
+                              success_url = '/updated/'
 
                   class updated(TemplateView):
                         pass
@@ -6794,5 +6791,136 @@ get_success_url(self):
 ------------------------------------------------------------------------------------------------------------------
 
 
-            ----------------------> Authentication Views with Function Based Class <--------------------
+            ----------------------> gs106 - Authentication Views with Function Based Class <--------------------
+
+      
+      In Django, you can handle authentication views using function-based views by utilizing the built-in views 
+      provided by `django.contrib.auth.views`. These views handle common authentication tasks like login, logout, 
+      and password reset. Here's an example demonstrating how to use function-based views for authentication in 
+      Django:
+
+-------------> Example
+
+      from django.urls import path
+      from django.contrib.auth import views as auth_views
+      from django.shortcuts import render, redirect
+
+      # Custom view for a protected resource
+      def protected_view(request):
+            if request.user.is_authenticated:
+                  return render(request, 'protected.html')
+            else:
+                  return redirect('login')
+
+      urlpatterns = [
+            path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+            path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+            path('password_reset/', auth_views.PasswordResetView.as_view(template_name='password_reset.html'), name='password_reset'),
+            path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),
+            path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'), name='password_reset_confirm'),
+            path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
+            path('protected/', protected_view, name='protected_view'),
+      ]
+
+
+In this example:
+
+- The `auth_views.LoginView` is used for handling the login functionality.
+- The `auth_views.LogoutView` is used for handling the logout functionality.
+- The `auth_views.PasswordResetView`, `auth_views.PasswordResetDoneView`, `auth_views.PasswordResetConfirmView`, 
+      and `auth_views.PasswordResetCompleteView` are used for handling password reset functionality.
+- A custom `protected_view` is created to demonstrate a protected resource that requires authentication.
+
+                  
+                  
+                  -------------------------> Practical Approach <---------------------
+
+      
+      
+itne sare humko authentication ke andar methods mil jaate h...
+      admin/
+      accounts/ login/ [name='login']
+      accounts/ logout/ [name='logout']
+      accounts/ password_change/ [name='password_change']
+      accounts/ password_change/done/ [name='password_change_done']
+      accounts/ password_reset/ [name='password_reset']
+      accounts/ password_reset/done/ [name='password_reset_done']
+      accounts/ reset/<uidb64>/<token>/ [name='password_reset_confirm']
+      accounts/ reset/done/ [name='password_reset_complete']
+      profile/ [name='profile']
+
+
+                        ------------------------> Steps <--------------------------
+
+Step 1. add this is urls.py 
+
+            from django.urls import path,include
+            from . import views
+
+            urlpatterns = [
+                  path('accounts/',include('django.contrib.auth.urls')),
+                  path('profile/',views.profile,name='profile'),
+            ]
+
+
+Step 2. Add login page template so that we can render it
+                  # default me humare 'form' me loginform rehta h.
+
+            http://127.0.0.1:8000/accounts/login/                 -----> defalut template for login page --registration/login.html
+
+      Login hote hi humko profile ka page nhi hone ka error dega ----> http://127.0.0.1:8000/accounts/profile/
+
+Step 3. Create Profile Page so that we can move ther after login..
+                  ----> link --- http://127.0.0.1:8000/accounts/profile/ 
+                  ---> Views.py
+                        from django.shortcuts import render
+
+                        # Create your views here.
+                        def profile(request):
+                              return render(request,'registration/profile.html')
+
+Step 4. Want to reset your password?
+                  ----> link ---- http://127.0.0.1:8000/accounts/password_reset/
+
+            This will send the Email to your registerd Email address. For this we have to add 1 line of code in 
+            settings.py...
+  
+            EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+      This will receive on terminal as we are in developing phase..
+
+            Content-Type: text/plain; charset="utf-8"
+            MIME-Version: 1.0
+            Content-Transfer-Encoding: 8bit
+            Subject: Password reset on 127.0.0.1:8000
+            From: webmaster@localhost
+            To: harshsahu@gmail.com
+            Date: Sun, 10 Dec 2023 10:17:14 -0000
+            Message-ID: <170220343494.5744.10422528787436311209@LAPTOP-GNG3OKGT>
+
+
+            You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+            Please go to the following page and choose a new password:
+
+            http://127.0.0.1:8000/accounts/reset/Mg/bz016q-a9eb9f3833ead42387fcd8b2a698c23f/
+
+            Your username, in case you’ve forgotten: harsh
+
+            Thanks for using our site!
+
+            The 127.0.0.1:8000 team
+
+Step 5. Logout from Profile Page...
+                  ----> link --- http://127.0.0.1:8000/accounts/logout/ 
+
+step 6. If we want to redirect any other page rather than profile page after login, we can do it by adding this code 
+            in settings.py file
+
+            LOGIN_REDIRECT_URL = '/'
+
+
+
+
 

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is profile page</h1>
+    <a href="{% url 'logout' %}"><button type="button">Logout</button></a>        {% comment %}   Default me humare logout ka name 'logout hota h' {% endcomment %}
+    <h2>Want to change Password?</h2>
+    <a href="{% url 'password_change' %}"><button>Password Changer</button></a>
+</body>
+</html>

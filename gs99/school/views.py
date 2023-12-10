@@ -19,7 +19,6 @@ class StudentDetails(DetailView):
 
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(**kwargs)
-
         context['all_students'] = self.model.objects.all().order_by('name')
         return context
 
