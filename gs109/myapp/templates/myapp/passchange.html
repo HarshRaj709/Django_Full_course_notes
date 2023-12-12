@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .test{
+            color:red;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <h1>THis is customize password change Form.</h1>
+    <hr>    
+    {{pass}}
+    <hr>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% comment %} {{form.as_p}} {% endcomment %}            <!--hum isko   for fm im form ke through bhi krsakte h jese ki phle handle krte the forms ko.-->
+        {{form.old_password.label_tag}}{{form.old_password}} <br>
+        {{form.new_password1.label_tag}}{{form.new_password1}} <br>
+        {{form.new_password2.label_tag}}{{form.new_password2}} <br>
+        <input type="submit" value="Change">
+    </form>
+    <br><br><br>
+    <a href="{% url 'home' %}"><button>cancel</button></a>
+</body>
+</html>

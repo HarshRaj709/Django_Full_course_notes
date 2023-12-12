@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>redirected to dashboard</h1>
+    <a href="{% url 'logout' %}">Logout</a>
+    <hr>
+    <h2>Want to change your password?</h2>
+    <a href="{% url 'custopass' %}"><button>Change password</button></a>
+    <hr>
+    <a href="{% url 'home' %}"><button>Home</button></a>
+</body>
+</html>

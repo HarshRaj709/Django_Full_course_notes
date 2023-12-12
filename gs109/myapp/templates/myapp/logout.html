@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Logged out {{site}}</h1>
+    {{title}}
+    <h2>Want to login again?</h2>
+    {{multiple.name.first_name}}:{{multiple.class}}
+    <a href="{% url 'login' %}"><button>login</button></a>
+    <hr>
+    <a href="{% url 'home' %}"><button>Home</button></a>
+</body>
+</html>

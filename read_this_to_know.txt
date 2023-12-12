@@ -6791,7 +6791,7 @@ get_success_url(self):
 ------------------------------------------------------------------------------------------------------------------
 
 
-            ----------------------> gs106 - Authentication Views with Function Based Class <--------------------
+            ----------------------> gs106 - Authentication Views with Function Based Views <--------------------
 
       
       In Django, you can handle authentication views using function-based views by utilizing the built-in views 
@@ -6863,7 +6863,8 @@ Step 1. add this is urls.py
             ]
 
 
-Step 2. Add login page template so that we can render it
+Step 2. Add login page template so that we can render it.
+            humko login.html , registration ke ander chahiye... tabhi kaam krega.
                   # default me humare 'form' me loginform rehta h.
 
             http://127.0.0.1:8000/accounts/login/                 -----> defalut template for login page --registration/login.html
@@ -7058,4 +7059,629 @@ step 6. If we want to redirect any other page rather than profile page after log
                         path('contact/',views.Contact.as_view(),name='contact')
                   ]
 
+------------------------------------------------------------------------------------------------------------------
+
+            ---------------> gs109 - Customize Authentication Views <-----------------
+
       
+1. LoginView : 
+
+      If you want to customize the `LoginView` in Django further by adding your own logic or modifying its 
+      behavior, you can create a subclass of `LoginView` and override the relevant methods.
+      Here's an example:
+
+            1. **Create a custom view:**
+
+                  
+                  from django.contrib.auth.views import LoginView
+                  from django.shortcuts import redirect
+
+                  class CustomLoginView(LoginView):
+                        template_name = 'custom_login.html'  # Customize the template name if needed
+
+                        def form_valid(self, form):
+                        # Your custom logic when the form is valid
+                        # For example, logging additional information
+
+                        # Call the parent class method to perform the default behavior
+                        response = super().form_valid(form)
+
+                        # Add your custom logic here, e.g., redirect to a specific page
+                        return redirect('my_custom_redirect')
+
+                        # Add more custom methods or override other methods as needed
+
+
+            2. **Update your `urls.py` to use the custom view:**
+
+                  
+                  from django.urls import path
+                  from .views import CustomLoginView
+
+                  urlpatterns = [
+                        # Other URL patterns
+                        path('login/', CustomLoginView.as_view(), name='login'),
+                  ]
+
+
+            3. **Create a custom template:**
+
+                  Create a custom template for your login view. Create a new HTML file (e.g., `custom_login.html`) 
+                  in your 
+                  templates folder.
+
+                  Now, your `CustomLoginView` includes additional logic in the `form_valid` method, and you have a 
+                  custom template for the login view. Customize the view and template according to your specific 
+                  requirements.
+
+      ------------------------------->    Attributes of LoginView:      <-----------------------------------
+
+      The `LoginView` in Django is based on Django's `FormView` and inherits many of its attributes. Below are some of the key attributes you might find useful when customizing the `LoginView`:
+
+1. **`template_name`:**
+   - *Description:* Specifies the name of the template to be used for rendering the login form.
+   - *Default:* `'registration/login.html'`
+
+2. **`form_class`:**
+   - *Description:* The form class that the view should use for handling authentication.
+   - *Default:* `AuthenticationForm`
+
+3. **`redirect_authenticated_user`:**
+   - *Description:* If `True`, redirects authenticated users to the URL specified in the `success_url`.
+   - *Default:* `False`
+
+4. **`redirect_field_name`:**
+   - *Description:* The name of the GET parameter to use for the redirect URL.
+   - *Default:* `'next'`
+
+5. **`success_url`:**
+   - *Description:* The URL to redirect to after a successful login.
+   - *Default:* `None`
+
+6. **`extra_context`:**
+   - *Description:* A dictionary of extra context data to pass to the template.
+   - *Default:* `None`
+
+7. **`initial`:**
+   - *Description:* A dictionary of initial data to populate the login form.
+   - *Default:* `None`
+
+8. **`authentication_form`:**
+   - *Description:* The form class to use for authentication.
+   - *Default:* `None` (which means using the default `AuthenticationForm`)
+
+9. **`context_instance`:**
+   - *Description:* Deprecated since Django 1.10 and removed in Django 2.0.
+
+10. **`extra_context`:**
+    - *Description:* A dictionary of extra context data to pass to the template.
+    - *Default:* `None`
+
+These attributes can be customized in your custom login view by overriding them or providing new values.
+For example, in your custom login view class, you might define:
+
+
+                        class CustomLoginView(LoginView):
+                              template_name = 'custom_login.html'
+                              form_class = CustomAuthenticationForm  # Your custom authentication form class
+                              redirect_authenticated_user = True
+                              success_url = '/custom-success-url/'
+                              extra_context = {'custom_variable': 'Custom Value'}
+
+                  -----------------------> Methods in LoginView <---------------------
+
+      from django.contrib.auth.views import LoginView
+      from django.shortcuts import redirect, render
+
+      class CustomLoginView(LoginView):
+            template_name = 'custom_login.html'  # Customize the template name if needed
+
+            def form_valid(self, form):
+                  # Custom logic when the form is valid
+                  # For example, logging additional information
+
+                  # Call the parent class method to perform the default behavior
+                  response = super().form_valid(form)
+
+                  # Add your custom logic here, e.g., redirect to a specific page
+                  return redirect('my_custom_redirect')
+
+            def form_invalid(self, form):
+                  # Custom logic when the form is invalid
+                  # For example, logging additional information
+
+                  # Call the parent class method to perform the default behavior
+                  response = super().form_invalid(form)
+
+                  # Add your custom logic here, e.g., render a custom template
+                  return render(self.request, 'custom_invalid_login.html', {'form': form})
+
+            def get_context_data(self, **kwargs):
+                  # Add custom context data to be used in the template
+                  context = super().get_context_data(**kwargs)
+                  context['custom_variable'] = 'Custom Value'
+                  return context
+
+            ---------------------> Context Passed in LoginView By Default <-------------------
+
+      4 context variables passed..
+
+1. form :- A form object representing the authenticationForm.
+
+2. next: The URL to redirect after successful login.
+
+3. site: The current site,according to the SITE_ID settings.If you dont have the site framework installed, this 
+            will be set to an instance of requestSite,which derives the site name and domain form the current HttpRequest.
+
+4. site name: An alias for site.name. If you don't have the site framework installed, this will be set to the 
+            value of request.META['SERVER_NAME'].
+
+            Custom Template:-
+                  path('login/", views. LoginView.as_view(template_name='myapp/login.html'), name='login')
+------------------------------------------------------------------------------------------------------------------
+
+2.   LogoutView: -
+
+
+                  django.contrib.auth.views.Logout View
+                  template_name = 'registration/logged_out.html'
+                  path('logout/', views. LogoutView.as_view(), name='logout')
+
+      logged_out.html template is already available and used by admin logout template file.
+      You can create your own custom logout template by defining template_name attribute.
+
+
+      Default Template: registration/logged_out.html
+
+
+Context Variables:-This template gets passed three template context variables:
+
+      title: The string "Logged out", localized.
+
+      site: The current Site, according to the SITE_ID setting. If you don't have the site framework 
+            installed, this will be set to an instance of RequestSite, which derives the site name and domain 
+            from the current HttpRequest.
+
+      site name: An alias for site.name. If you don't have the site framework installed, this will be set to the 
+      value of request.META['SERVER_NAME'].
+
+      Custom Template:-
+            path('logout/', views.LogoutView.as_view(template_name='myapp/logout.html'), name='logout')
+
+Attributes:
+
+
+1.    next_page: The URL to redirect to after logout. Defaults to settings.LOGOUT_REDIRECT_URL.
+
+2.    template_name: The full name of a template to display after logging the user out. Defaults to 
+      registration/logged_out.html.
+
+3.    redirect_field_name: The name of a GET field containing the URL to redirect to after log out. Defaults to 
+      next. Overrides the next page URL if the given GET parameter is passed.
+
+4.    extra_context: A dictionary of context data that will be added to the default context data passed to the 
+      template.
+
+-------------------------------------------------------------------------------------------------------------------
+
+3.    PasswordChangeView: here we get form as context variable for form of password change.
+
+      Import from:django.contrib.auth.views.PasswordChangeView
+
+      default template:template_name = 'registration/password_change_form.html'
+                        registration/password_change_form.html template is already available and used by admin 
+                        change password template file.
+
+      path: path('password_change/", views.PasswordChangeView.as_view(), name='password_change'),
+
+
+            Attributes:
+                  1.    template_name:
+                        Description: Specifies the name of the template to be used for rendering the password 
+                                     change form.
+                        Default: 'registration/password_change_form.html'
+                        
+                  2.    form_class:
+                        Description: The form class that the view should use for handling password changes.
+                        Default: PasswordChangeForm
+                        
+                  3.    success_url:
+                        Description: The URL to redirect to after a successful password change.
+                        Default: reverse_lazy('password_change_done')
+                        
+                  4.    post_change_redirect:
+                        Description: Deprecated since Django 3.1, use success_url instead.
+                        
+                  5.    extra_context:
+                        Description: A dictionary of extra context data to pass to the template.
+                        Default: None
+                        
+                  6.    extra_context_callback:
+                        Description: A callable that takes a form and returns a dictionary of extra context data.
+                        Default: None
+
+
+------------------------------------------------------------------------------------------------------------------
+
+4-    PasswordChangeDoneView: After successful password change this tempalte appears.
+            Import from:      django.contrib.auth.views.PasswordChangeDoneView
+
+            default template: template_name = 'registration/password_change_done.html'
+                              registration/password_change_done.html template is already available and used by 
+                              admin password change done template file.
+
+            path: path('password_change/done/", views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+
+            custom template:  path('password_change/',views.PasswordChangeDone.as_view(template_name='myapp/change.html',name='password'))
+
+      Attributes:
+
+            template_name: The full name of a template to use. Defaults to registration/password_change_done.html 
+                              if not supplied.
+
+            extra_context: A dictionary of context data that will be added to the default context data passed to 
+                              the template.
+
+------------------------------------------------------------------------------------------------------------------
+
+5-    PasswordResetView:
+            Import From:    django.contrib.auth.views.PasswordResetView
+
+            template_name = 'registration/password_reset_form.html'
+
+            path('password_reset/", views.PasswordResetView.as_view(), name='password_reset'),
+
+            registration/password_reset_form.html template is already available and used by admin password reset 
+                  template file.
+
+            You can create your own custom password reset template by defining template_name attribute.
+
+      This Email template gets passed following email template context variables:
+
+      email: An alias for user.email
+            user: The current User, according to the email form field. Only active users are able to reset their 
+                  passwords (User.is_active is True).
+
+            site name: An alias for site.name. If you don't have the site framework installed, this will be set to 
+                        the value of request.META['SERVER_NAME']. For more on sites, see The "sites" framework.
+
+            • domain: An alias for site.domain. If you don't have the site framework installed, this will be set 
+                        to the value of request.get_host().
+
+            • protocol: http or https
+
+            • uid: The user's primary key encoded in base 64.
+
+⚫ token: Token to check that the reset link is valid.
+
+Attributes:-
+
+            template_name: The full name of a template to use for displaying the password reset form. Defaults to 
+                              registration/password_reset_form.html if not supplied.
+
+            form_class: Form that will be used to get the email of the user to reset the password for. Defaults 
+                              to PasswordResetForm.
+
+            email_template_name: The full name of a template to use for generating the email with the reset 
+                                    password link. Defaults to registration/password_reset_email.html if not supplied.
+
+            subject_template_name: The full name of a template to use for the subject of the email with the reset 
+                                    password link. Defaults to registration/password_reset_subject.txt if not 
+                                    supplied.
+
+            token_generator: Instance of the class to check the one time link. This will default to 
+                              default_token_generator, it's an instance of django.contrib.auth.tokens.PasswordReset TokenGenerator.
+
+            success_url: The URL to redirect to after a successful password reset request. 
+                              Defaults to 'password_reset_done'.
+
+            from_email: A valid email address. By default Django uses the DEFAULT_FROM_EMAIL.
+
+            extra_context: A dictionary of context data that will be added to the default context data passed 
+                              to the template.
+
+            html_email_template_name: The full name of a template to use for generating a text/html multipart 
+                                          email with the password reset link. By default, HTML email is not sent.
+
+            extra_email_context: A dictionary of context data that will be available in the email template. It can 
+                                    be used to override default template context values listed below e.g. domain.
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+6-    PasswordResetDoneView: The page shown after a user has been emailed a link to reset their password. 
+                              This view is called by default if the PasswordReset View doesn't have an explicit 
+                              success_url URL set.
+                              If the email address provided does not exist in the system, the user is inactive, 
+                              or has an unusable password, the user will still be redirected to this view but no 
+                              email will be sent.
+
+            Import from:django.contrib.auth.views.PasswordResetDoneView
+
+            template_name = 'registration/password_reset_done.html'
+
+            path('password_reset/done/", views. PasswordResetDoneView.as_view(), name='password_reset_done'),
+
+            registration/password_reset_done.html template is already available and used by admin password
+
+            reset done template file.
+
+-----------------------------------------------------------------------------------------------------------------
+
+7-    PasswordResetConfirmView:
+
+      Attributes:-
+
+            template_name: The full name of a template to display the confirm password view. Default value is 
+                              registration/password_reset_confirm.html.
+
+            token_generator: Instance of the class to check the password. This will default to 
+                              default_token_generator, it's an instance of django.contrib.auth.tokens.PasswordReset 
+                              TokenGenerator.
+
+            post_reset_login: A boolean indicating if the user should be automatically authenticated after a
+
+            successful password reset. Defaults to False. post_reset_login_backend: A dotted path to the 
+                                          authentication backend to use when authenticating a user if 
+                                          post_reset_login is True. Required only if you have multiple 
+                                          AUTHENTICATION_BACKENDS configured. Defaults to None.
+
+            form_class: Form that will be used to set the password. Defaults to SetPasswordForm.
+
+            success_url: URL to redirect after the password reset done. Defaults to 'password_reset_complete'.
+
+            extra_context: A dictionary of context data that will be added to the default context data passed 
+                              to the template.
+
+            reset_url_token: Token Parameter displayed as a component of password reset URLs.Default to 
+                              'set-password'
+
+
+------------------------------------------------------------------------------------------------------------------
+
+8-    PasswordResetCompleteView: It presents a view which informs the user that the password has been successfully 
+                                    changed.
+
+            Import from: django.contrib.auth.views.PasswordResetComplete View
+
+            template_name = 'registration/password_reset_complete.html'
+
+            path('reset/done/", views. PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
+            registration/password_reset_complete.html template is already available and used as admin password 
+                  reset complete template file.
+
+
+------------------------------------------------------------------------------------------------------------------
+
+                  ---------------------------> Built in Forms <--------------------------------
+
+
+• AdminPasswordChangeForm - A form used in the admin interface to change a user's password. It takes the user as 
+                              the first positional argument.
+
+• AuthenticationForm - A form for logging a user in. It takes request as its first positional argument, which is 
+                        stored on the form instance for use by sub-classes.
+
+• PasswordChangeForm - A form for allowing a user to change their password.
+
+• PasswordResetForm - A form for generating and emailing a one-time use link to reset a user's password.
+
+• SetPasswordForm - A form that lets a user change their password without entering the old password.
+
+• UserChangeForm - A form used in the admin interface to change a user's information and permissions.
+
+• UserCreationForm - A ModelForm for creating a new user.
+
+
+
+            -------------------------------> Practical Approach <--------------------------------
+
+1. Customizing LoginView:
+
+----------->To change default template
+
+      ---------->first we have to import views from django.contrib.auth in Urls.py....
+
+            from django.urls import path
+            from . import views
+            from django.contrib.auth import views as auth_views
+
+            urlpatterns = [
+                  path('profile/',views.profile,name='profile'),
+                  path('login/',auth_views.LoginView.as_view(template_name='myapp/login.html'),name='login'),     #now it will work perfectlly
+            ]
+
+----------> Now change the default after login location.
+
+            Add LOGIN_REDIRECT_URL = '/dashboard/' in settings.py
+            then add url for this.
+            from django.views.generic import TemplateView
+
+            path('dashboard/',TemplateView.as_view(template_name='myapp/dash.html')),
+
+----------> Now change Logout Default setting
+
+            # path('logout/',auth_views.LogoutView.as_view(),name='logout'),
+
+            here we use inheritance of LogoutView
+            ----> Views.py
+                        class CustomLogoutView(LogoutView):         #here we inherit LogoutView
+                              model = User
+                              template_name = 'myapp/logout.html'
+                              success_url='myapp/login.html'
+
+                              def get_context_data(self, **kwargs):
+                                    context= super().get_context_data(**kwargs)
+                                    context['title'] = 'Bahar a gye h'
+                                    context['site'] = 'Harsh ki Site h Chacha'
+                                    context['multiple'] = {'name':self.model.objects.get(pk=2),'class':'btech'} #multiple context passed
+                                    return context
+
+            -----> Urls.py
+
+                        path('logout/',views.CustomLogoutView.as_view(),name='logout'),
+
+-----------> Now passwordChangeView customization...
+
+            By default it is redirecting to ----> registration/password_change_form.html.
+
+            we will override it by two methods 
+
+                  1. By inherit the PasswordChangeView
+                        class CustomizePassword(PasswordChangeView):
+                              template_name = 'myapp/passchange.html'
+                              success_url = 'myapp/passsuccess.html'      # otherwise defaut template pe redirect krdega..registration/password_change_done.html, name='password_change_done'
+                              # success_url = reverse_lazy('password_change_done')     #isme name dala jata h reverse_lazy
+
+                              def get_context_data(self,*args,**kwargs):
+                                    context = super().get_context_data(**kwargs)
+                                    context['pass'] = 'ha bhai aa gya swad.'
+                                    return context
+                        
+                        Now to show the form in own template add this ...
+                        ----> html File
+
+                                    <form action="" method="post">
+                                          {% csrf_token %}
+                                          {% comment %} {{form.as_p}} {% endcomment %}
+                                          {{form.old_password.label_tag}}{{form.old_password}} <br>
+                                          {{form.new_password1.label_tag}}{{form.new_password1}} <br>
+                                          {{form.new_password2.label_tag}}{{form.new_password2}} <br>
+                                          <input type="submit" value="Change">
+                                    </form>
+
+
+                  2. By providing template name in its urls.
+                        path('change_password/',auth_views.PasswordChangeView.as_view(template_name='myapp/passchange.html'),name='passchange')
+
+-----------> Now how to add class in Form of passwordchangeView or others
+
+                  class CustomizePassword(PasswordChangeView):
+                        template_name = 'myapp/passchange.html'
+                        success_url = 'myapp/passsuccess.html'      # otherwise defaut template pe redirect krdega..registration/password_change_done.html, name='password_change_done'
+                        # success_url = reverse_lazy('password_change_done')     #isme name dala jata h reverse_lazy
+
+                        def get_context_data(self,*args,**kwargs):
+                              context = super().get_context_data(**kwargs)
+                              context['pass'] = 'ha bhai aa gya swad.'
+                              return context
+                        
+                        def get_form(self, form_class=None):        # here as we not provided any custom form we specified form_class = None.
+                              form = super().get_form(form_class)
+                              form.fields['old_password'].widget = forms.TextInput(attrs={'class':'test'})
+                              # form.labels['old_password'].label = self.label(attrs={'class':'red'})
+                              return form
+
+-----------------------------------------------------------------------------------------------------------------
+
+                              ------------> Auth settings <--------------
+
+1-    Authentication Backends:
+            Django supports multiple authentication backends, allowing you to use different methods to 
+            authenticate users. The AUTHENTICATION_BACKENDS setting in settings.py specifies a list of 
+            authentication backends to use.
+
+                  AUTHENTICATION_BACKENDS = [
+                        'django.contrib.auth.backends.ModelBackend',
+                        # Add other backends as needed
+                  ]
+
+2-    User Model:
+            Django allows you to use a custom user model by specifying it in the AUTH_USER_MODEL setting. 
+            This is useful when you need to extend the default user model with additional fields or functionality.
+            
+                  AUTH_USER_MODEL = 'yourapp.CustomUser'
+
+3-    Login and Logout URLs:
+            You can specify the URLs to redirect to after a successful login or logout using the LOGIN_URL and 
+            LOGOUT_REDIRECT_URL settings.
+
+                 
+                  LOGIN_URL = 'login'
+                  LOGOUT_REDIRECT_URL = 'home'
+
+
+4-    Password Validation:
+            Django provides settings to configure password validation requirements. You can customize these 
+            settings to enforce strong passwords.
+
+
+                        # Example settings
+                        AUTH_PASSWORD_VALIDATORS = [
+                              # ...
+                              {
+                                    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+                                    'OPTIONS': {
+                                          'min_length': 8,
+                                    }
+                              },
+                              # ...
+                        ]
+5-    Session Timeout:
+            Configure the session timeout using the SESSION_COOKIE_AGE setting, which represents the age of session cookies in seconds.
+
+            
+                  SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
+
+6-    Two-Factor Authentication (2FA):
+            If you want to enable two-factor authentication, you can use third-party packages like django-otp 
+            or django-rest-framework-simplejwt that provide support for 2FA.
+
+            
+                  # Example using django-rest-framework-simplejwt for JWT tokens with 2FA
+                  SIMPLE_JWT = {
+                  'AUTH_HEADER_TYPES': ('Bearer',),
+                  'AUTH_TOKEN_CLASSES': ('yourapp.tokens.TwoFactorJSONWebToken',),
+                  # ...
+                  }
+
+-----------------------------------------------------------------------------------------------------------------
+
+                  --------------> Database Configuration in Django <----------------
+
+1.    Sqlite3: Default
+            open settings.py
+
+            DATABASE = {
+                  'default':{
+                        'ENGINE': 'django.db.backends.sqlite3',
+                        'NAME': os.path.join(BASE_DIR,'db.sqlite3'),
+                  }
+            }
+
+2.    Mysql Configuration:
+
+            Install mysql in your system.
+            You have to create your own database and user to config MySql with Django.
+            open settings.py
+
+            DATABASE = {
+                  'default':{
+                        'ENGINE': 'django.db.backends.mysql',
+                        'NAME': 'database_name',
+                        'USER': 'User_name',
+                        'PASSWORD': 'Password',
+                        'HOST': 'localhost',    #optional
+                        'Port': port_number          #optional
+                  }
+            }
+
+3.    Oracle Configuration:
+
+            DATABASES = {
+                  'default': {
+                        'ENGINE': 'django.db.backends.oracle',
+                        'NAME': 'your_oracle_db_name',
+                        'USER': 'your_oracle_username',
+                        'PASSWORD': 'your_oracle_password',
+                        'HOST': 'your_oracle_host',  # Set to the Oracle database server address
+                        'PORT': 'your_oracle_port',  # Set to the Oracle database server port
+                  }
+                  }
+
+4.    Postgres Configuration: same as all others.
+
+------------------------------------------------------------------------------------------------------------------
+
+
