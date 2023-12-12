@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Our all posts</h1>
+    {% comment %} {% for post in posts %} {% endcomment %}
+    {% for post in page_obj %}
+        <h2>{{post.title}}</h2>
+        <p>{{post.desc}}</p>
+        <small>{{post.publish_date}}</small>
+    {% endfor %}
+    
+<div>
+    <h3>starting item on currnet page:-{{page_obj.start_index}}</h3> <br>
+    {{page_obj.number}} out of {{page_obj.paginator.num_pages}}<br>
+    <span>
+        {% if page_obj.has_previous %}     <!--isme humare pages honge 1-4 -->
+            <a href="?page={{page_obj.previous_page_number}}">Previous</a>
+        {% endif %}
+        &nbsp;
+        {% if page_obj.has_next %}
+            <a href="?page={{page_obj.next_page_number}}">Next</a>
+        {% endif %}
+    </span>
+</div>
+</body>
+</html>

@@ -7684,4 +7684,359 @@ Attributes:-
 
 ------------------------------------------------------------------------------------------------------------------
 
+                        ----------> gs110 Pagination in Django <------------
+
+      1. Function based pagination
+      2. Class based pagination
+
+                        ----------> Function Based Pagination <-------------
+
+      Certainly! In Django, the pagination system is built on the `Paginator` class and associated attributes 
+      and methods. Here's a breakdown of the key attributes and methods you might encounter when working with 
+      Django pagination:
+
+                  from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+                  from django.shortcuts import render
+                  from .models import YourModel
+
+                  def your_view(request):
+                        queryset = YourModel.objects.all()
+                        items_per_page = 10
+
+                        paginator = Paginator(queryset, items_per_page)
+                        page = request.GET.get('page')
+
+                        try:
+                              items = paginator.page(page)
+                        except PageNotAnInteger:
+                              # If the page parameter is not an integer, show the first page
+                              items = paginator.page(1)
+                        except EmptyPage:
+                              # If the page is out of range, deliver the last page of results
+                              items = paginator.page(paginator.num_pages)
+
+                        return render(request, 'your_template.html', {'items': items})
+
+
+Paginator Class:
+
+      Attributes:
+
+            1. **`object_list`**: The list of items to be paginated.
+
+            2. **`per_page`**: The number of items to display per page.
+
+            3. **`count`**: The total number of items across all pages.
+
+            4. **`num_pages`**: The total number of pages.
+
+            5. **`page_range`**: A range of pages suitable for display (useful for rendering page navigation).
+
+      Methods:
+
+            1. **`__init__(object_list, per_page)`**: Initializes the paginator with the given list of objects and the number of items per page.
+
+            2. **`page(number)`**: Returns a `Page` object for the given page number.
+
+Page Class:
+
+      Attributes:
+
+            1. **`object_list`**: The list of items on the current page.
+
+            2. **`number`**: The current page number.
+
+            3. **`paginator`**: A reference to the associated `Paginator` object.
+
+            4. **`has_previous`**: True if there's a previous page.
+
+            5. **`has_next`**: True if there's a next page.
+
+            6. **`previous_page_number`**: The page number for the previous page.
+
+            7. **`next_page_number`**: The page number for the next page.
+
+            8. **`start_index`**: The 1-based index of the first item on the current page.
+
+            9. **`end_index`**: The 1-based index of the last item on the current page.
+
+      Methods:
+
+            1. **`has_other_pages()`**: Returns True if there are pages other than the current one.
+
+            2. **`next()`**: Returns a `Page` object for the next page.
+
+            3. **`previous()`**: Returns a `Page` object for the previous page.
+
+Using Paginator in Views:
+
+            1. **`Paginator(queryset, per_page)`**: Create a paginator object.
+
+            2. **`paginator.page(number)`**: Get a specific page using the page number.
+
+            3. **`page_obj`**: The page object for the current page (used in templates).
+
+Using Paginator in Templates:
+
+            1. **`items`**: The variable containing the items on the current page.
+
+            2. **`items.paginator`**: Access the paginator from within the template.
+
+            3. **`items.number`**: The current page number. (used)
+
+            4. **`items.paginator.num_pages`**: The total number of pages.  (used)
+
+            5. **`items.has_previous`**, **`items.has_next`**: Booleans indicating the presence of previous or next pages. (used)
+
+            6. **`items.previous_page_number`**, **`items.next_page_number`**: Page numbers for the previous and next pages.
+
+            7. **`items.start_index`**, **`items.end_index`**: Index of the first and last items on the current page. (used)
+
+                  ----------------------------> Practical Approach <------------------------------
+
+--------------> views.py
+
+                  from django.shortcuts import render
+                  from .models import Post
+                  from django.core.paginator import Paginator
+
+                  # Create your views here.
+                  def home(request):
+                        all_post = Post.objects.all().order_by('name')     #unordered object_list: <class 'blog.models.Post'> QuerySet. isko solve krne ke order dena hoga koi bhi..
+                        items_per_page = 3
+                        paginator = Paginator(all_post,items_per_page)
+                        page_number = request.GET.get('page')        #fetching page number from created page.
+                        page_obj = paginator.get_page(page_number)      #isse hum uss page per pahuch jayege
+                        return render(request,'blog/home.html',{'posts':page_obj})
+
+      -------> by this code we get only 3 posts in our page but there will be no pageing links show in page so for 
+                  this we have to do some changes in template..
+
+
+---------------> template
+
+                  <h1>Our all posts</h1>
+                        {% comment %} {% for post in posts %} {% endcomment %}
+                        {% for post in posts %}
+                              <h2>{{post.title}}</h2>
+                              <p>{{post.desc}}</p>
+                              <small>{{post.publish_date}}</small>
+                        {% endfor %}
+                        
+                        <div>
+                        <h3>starting item on currnet page:-{{posts.start_index}}</h3> <br>
+                        {{posts.number}} out of {{posts.paginator.num_pages}}<br>
+                        <span>
+                              {% if posts.has_previous %}     <!--isme humare pages honge 1-4 -->
+                                    <a href="?page={{posts.previous_page_number}}">Previous</a>
+                              {% endif %}
+                              &nbsp;
+                              {% if posts.has_next %}
+                                    <a href="?page={{posts.next_page_number}}">Next</a>
+                              {% endif %}
+                        </span>
+                        </div>
+
+-----------> Now we talk about orphans in pagination.
+
+                  In the context of Django pagination, the term "orphans" refers to the number of items that are 
+                  left on the last page if it contains fewer items than the specified number per page. In other 
+                  words, if the total number of items is not perfectly divisible by the number of items per page, 
+                  there may be a few remaining items that don't form a complete page.
+
+                  The orphans attribute in Django's Paginator class allows you to specify how many items are 
+                  acceptable to be left on the last page without being moved to a new page. It helps in situations
+                  where having a few items on the last page doesn't significantly affect the overall user 
+                  experience.
+
+                              from django.core.paginator import Paginator
+
+                              # Example usage
+                              items_per_page = 10
+                              paginator = Paginator(queryset, items_per_page, orphans=5)
+
+--------------------> Practical Approach
+
+                        def home(request):
+                              all_post = Post.objects.all().order_by('title')             #without order ke ye 'unordered object_list: <class 'blog.models.Post'> QuerySet' error dega.
+                              items_per_page = 3
+                              paginator = Paginator(all_post,items_per_page,orphans = 2)      #isse humare last ke 2 posts bhi uske previous post page me adjust ho jayega.
+                              page_number = request.GET.get('page')        #fetching page number from created page.
+                              page_obj = paginator.get_page(page_number)      #isse hum uss page per pahuch jayege
+                              print(paginator)
+                              print()
+                              print(page_number)
+                              print()
+                              print(page_obj)
+                              return render(request,'blog/home.html',{'posts':page_obj})
+
+
+-------------------> complete code in gs101...
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+                  ----------------> gs111 Class based pagination in Django <-------------
+
+      In Django, you can implement pagination in class-based views using the `ListView` class, which is designed 
+      to work with paginated lists of objects. Here's a step-by-step guide on how to use pagination in a 
+      class-based view:
+
+
+--------->models.py
+                        from django.db import models
+
+                        class YourModel(models.Model):
+                              # Your model fields here
+                              title = models.CharField(max_length=255)
+                              content = models.TextField()
+
+                              def __str__(self):
+                                    return self.title
+
+
+### 1. Create a ListView:
+
+                  Use Django's `ListView` in your views to handle paginated lists. Update your `views.py`:
+
+      ------>views.py
+                  from django.views.generic import ListView
+                  from .models import YourModel
+
+                  class YourModelListView(ListView):
+                  model = YourModel
+                  template_name = 'your_model_list.html'
+                  context_object_name = 'items'
+                  paginate_by = 10  # Number of items per page
+                  
+
+### 2. Update URLs:
+
+            Configure your URLs to use the `YourModelListView` class. For example, in your `urls.py`:
+
+                  
+      ----->urls.py
+                  from django.urls import path
+                  from .views import YourModelListView
+
+                  urlpatterns = [
+                  path('your-model-list/', YourModelListView.as_view(), name='your-model-list'),
+                  # Other URL patterns as needed
+                  ]
+                  
+
+### 3. Create a Template:
+
+                  Create a template for rendering the paginated list. For example, in your 
+                  `templates/your_app/your_model_list.html`:
+
+<!-- your_model_list.html -->
+{% for item in items %}
+    {# Display your item data here #}
+    {{ item.title }} - {{ item.content }}
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if items.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ items.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ items.number }} of {{ items.paginator.num_pages }}.
+        </span>
+
+        {% if items.has_next %}
+            <a href="?page={{ items.next_page_number }}">next</a>
+            <a href="?page={{ items.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+                  --------------------------> Practical Approach <-----------------------------
+
+
+
+      -----------> Views.py 
+
+                        from typing import Any
+                        from django.shortcuts import render
+                        from .models import Post
+                        from django.core.paginator import Paginator
+                        from django.views.generic import ListView
+                        from django.http import Http404
+
+
+                        class Home(ListView):
+                              model = Post
+                              template_name = 'blog/home.html'
+                              ordering = ['title']
+                              paginate_by = 3         #btyega ki kitne aane chaiye 1 page me   ----- important
+                              paginate_orphans = 2        #last ke 2 bhi uske previous page me aagye.
+
+                              #isme problem h ki humare extra page number dalne pr 404error de rha h. usko sahi krne ke liye..
+                              def get_context_data(self, **kwargs):
+                                    try:
+                                          return super(Home,self).get_context_data(**kwargs)
+                                    except Http404:
+                                          self.kwargs['page'] = 1
+                                          return super(Home,self).get_context_data(**kwargs)
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+                  -------------------> gs112 Blog Project based on Pagination <--------------------
+
+      step 1: create model.py
+                  from django.db import models
+
+                  # Create your models here.
+                  class Post(models.Model):
+                        title = models.CharField(max_length=100)
+                        desc = models.TextField(max_length=500)
+                        publish_date = models.DateTimeField()
+
+      step 2: Register it
+
+      step 3: Views.py
+
+                        from typing import Any
+                        from django.shortcuts import render
+                        from .models import Post
+                        from django.core.paginator import Paginator
+                        from django.views.generic import ListView,DetailView
+                        from django.http import Http404
+
+
+                        class Home(ListView):
+                              model = Post
+                              template_name = 'blog/home.html'
+                              ordering = ['title']
+                              paginate_by = 3         #btyega ki kitne aane chaiye 1 page me   ----- important
+                              paginate_orphans = 2        #last ke 2 bhi uske previous page me aagye.
+
+                              #isme problem h ki humare extra page number dalne pr 404error de rha h. usko sahi krne ke liye..
+                              def get_context_data(self, **kwargs):
+                                    try:
+                                          return super(Home,self).get_context_data(**kwargs)
+                                    except Http404:
+                                          self.kwargs['page'] = 1
+                                          return super(Home,self).get_context_data(**kwargs)
+
+
+                        class PostDetailView(DetailView):
+                              model = Post
+                              template_name = 'blog/post.html'
+
+
+      step 4: Urls.py
+
+                        from django.urls import path
+                        from . import views
+
+                        urlpatterns = [
+                              path('',views.Home.as_view(),name='home'),
+                              path('post/<int:pk>/',views.PostDetailView.as_view(),name='detailpost'),
+                        ]
 
