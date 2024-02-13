@@ -78,7 +78,7 @@
 
       gs42-----> Practise to store data by model.py form
 
-      gs43-----> applying validators on form which was created by models.py
+      gs43-----> applying validators on form which was created by models.py (applying classes in forms)
 
       gs44-----> DYNAMIC URLS IN DJANGO
 
@@ -106,7 +106,7 @@
 
       gs56-----> Adding Admin rights for admin
 
-      gs57-----> Giving specific User, special permissions
+      gs57-----> Giving specific User, special permissions(perms)
 
                   Blog Project
 
@@ -124,6 +124,9 @@
 
 SOME IMPORTANT QUESTIONS----
 
+      forms ke field me class ke through css apply krne ke liye humko field me 
+            widget=forms.TextInput(attrs{'class':'name'})
+
       Ques 1. what are the models in django and why we use them?
       
       Ans. In Django, models are a fundamental part of the framework, and they serve as the abstraction layer that 
@@ -139,7 +142,7 @@ SOME IMPORTANT QUESTIONS----
                   fields = '__all__'  #['photo','date']
                   labels = {'photo':''}
 
-            why to use Meta class here?
+      why to use Meta class here?
 
       Ans 2. Yes, it will work without the Meta class. However, the Meta class is used to define metadata for the 
       form and is recommended to be used for better organization and readability of the code. The Meta class is 
@@ -182,11 +185,11 @@ SOME IMPORTANT QUESTIONS----
                   from django.db import models
 
                   class Author(models.Model):
-                  name = models.CharField(max_length=100)
+                        name = models.CharField(max_length=100)
 
                   class Book(models.Model):
-                  title = models.CharField(max_length=200)
-                  author = models.ForeignKey(Author, on_delete=models.CASCADE)
+                        title = models.CharField(max_length=200)
+                        author = models.ForeignKey(Author, on_delete=models.CASCADE)
             
 
       In this example, if an `Author` instance is deleted, all the `Book` instances related to that author 
@@ -305,8 +308,10 @@ isme humne include() ka 2nd method dekha h
 
                                 gs7-external templates wala folder
 isme humne templates ko lgana sikha h include() ke through .......... ab dekho isme kya problem h ki agar humari files html ki 
-jada ho jayegi to humko problem hoga bahut files ke arrangement me to isi problem ko solve krne ke liye hum seperate folders 
+jada ho jayegi (jese ki course application ki templates bhi sab ek me hi h) to humko problem hoga bahut files ke arrangement me to isi problem ko solve krne ke liye hum seperate folders 
 bnadenge hr ek application ke liye
+
+isme humko settings.py file me template folder ka path lgana hoga:- TEMPLATES_DIR = os.path.join(BASE_DIR,'folder name/templates')
 
 
                                 gs8
@@ -460,7 +465,8 @@ after that open settings.py file-----------------> now false Debug
 
                                           
 
-                                                      gs18 - using database via models.py
+                              gs18 - using database via models.py
+                              
 --->      ab isme hum databse ko use krna dekhenge ki kese connect krte h kese ORM ka use krke table bnate h....
 
 sabse app bna lo uske bad uske models.py me class bnao uske through humari tables bnegi
@@ -550,6 +556,8 @@ sabse app bna lo uske bad uske models.py me class bnao uske through humari table
                         def __str__(self):
                               return self.stuname   //  if we try to stuid then it will show error [ '__str__ returned non-string (type int)' ]
                                                       to solve this error convert it to str()
+                        def __str__(self):
+                              return str(self.roll)
 
                         abhi bhi ek problem h ki humare admin pannel me table me data show nhi ho rha h.
                         usko sahi krenge gs22 me
@@ -561,13 +569,15 @@ sabse app bna lo uske bad uske models.py me class bnao uske through humari table
       
       isko krne ke liye humko apne admin.py me ek new class bnani padegi...
 
+      isme hum ---------'' admin.site.register'' ka use nhi kr sakte h...
+
       class StudentAdmin(admin.ModelAdmin):
             list_display = ('stuid','stuname','stuemail','stupass')
 
 
       admin.site.register(Students,StudentAdmin)
 
------>   isme jada lines ka code bd rha h... km krne ke liye hum ['decorato'] ka use krenge
+----->   isme jada lines ka code bd rha h... km krne ke liye hum ['decorator'] ka use krenge
 
             @admin.register(Students)
             class StudentAdmin(admin.ModelAdmin):
@@ -659,7 +669,7 @@ sabse app bna lo uske bad uske models.py me class bnao uske through humari table
                   return render(request,'enroll/registration.html',{'use':user})
 
 
-                                    gs26 - Practise of previous approach and label,tags method of forms
+                              gs26 - Practise of previous approach and label,tags method of forms
 
 
 -------------------------------------------------------------------------------------------------------------
@@ -812,7 +822,7 @@ sabse app bna lo uske bad uske models.py me class bnao uske through humari table
 1st :  CharField(max_length=,min_length=)        ,by default TextInput
        error message (required,max_length,min_length)
        strip - it helps to remove whitspace. // bydefault True hota h.
-       empty_value - it helps when we make fied required but not give any value tis will generate error
+       empty_value - it helps when we make field required but not give any value this will generate error
                      to solve this we empty_value='anything you want'
        name = CharField(max_length=50,min_length=5,error_messages={'required':Enter your name
        //or customiz message})
@@ -873,7 +883,7 @@ Example:
             
 ------------------------------------------------------------------------------------------------------------
 
-                                    gs34- how to validate whole forms.py at single time
+                              gs34- how to validate whole forms.py at single time
 
       for this you have to use same approach to create project, but now here add clean() function on your 
       forms.py's class
@@ -982,7 +992,8 @@ NOTE----------------------------------------------------------------------------
                   {{forms.non_field_errors}}
                   {% for fields in forms %}
                         <div>
-                        {{fields.label_tag}}{{fields}}<span class='errorlist'>{{fields.errors|striptags}}</span>
+                        {{fields.label_tag}}{{fields}}<span class='errorlist'>{{fields.errors|striptags}}</span>  
+                        #without span tag there will be no class or id via which we can target it
                         </div>
                   {% endfor %}
                   <input type="submit" value="SUBmit">
@@ -1500,8 +1511,7 @@ def home(request):
                   {% endfor %}
             {% endif %}
 
-------------> message.tags ki wajah se humko class mil jati h messages ki jiise hum usko target kr 
-sakte h css me.
+------------> message.tags ki wajah se humko class mil jati h messages ki jiise hum usko target kr sakte h css me.
                   <span  class='info' >Your account info created Successfully</span><br>
 
 ----------------------------------------> get_level & set_level <--------------------------------------------
@@ -1857,34 +1867,45 @@ Example:-
       from django.contrib.auth.forms import UserCreationForm
       from django.contrib.auth.models import User
 
-
-      class SignupForm(UserCreationForm):
-            password2=forms.CharField(label='Confirm Password',widget=forms.PasswordInput)
-            first_name = forms.CharField(required=True)   #by specifying here we can make that field required
+      class Extradata(UserCreationForm):
+            email = forms.EmailField()
+            first_name = forms.CharField(required=True)
+            last_name = forms.CharField(required=True)
             class Meta:
                   model = User
-                  fields = ['username','first_name','last_name','email']  #ye username,first_name ye sab User se aarha h.
+                  fields = ['first_name','last_name','username','email','password1','password2']
+        
         
 
 -------> views.py
 
-                  from django.shortcuts import render
-                  # from django.contrib.auth.forms import UserCreationForm
-                  from .forms import SignupForm
+                  from django.shortcuts import render,redirect
+                  from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+                  from .forms import Extradata
+                  from django.contrib.auth.models import User
                   from django.contrib import messages
 
-                  # Create your views here.
-                  def sign_up(request):
-                        if request.method=='POST':
-                              fm = SignupForm(request.POST)
-                              if fm.is_valid():
-                                    fm.save()
-                                    messages.success(request,'Data saved Successfully')
-                                    # messages.info(request,'Data saved Successfully')
 
-                        else:
-                              fm=SignupForm()
-                  return render(request,'enroll/signup.html',{'form':fm})
+                  # Create your views here.
+                  def Signup(request):
+                  if request.method == 'POST':
+                        fm = Extradata(request.POST)
+                        if fm.is_valid():
+                              email = fm.cleaned_data['email']
+                              f_name = fm.cleaned_data['first_name']
+                              l_name = fm.cleaned_data['last_name']
+                              username = fm.cleaned_data['username']
+                              pass1 = fm.cleaned_data['password1']
+                              # pass2 = fm.cleaned_data['password2']
+                              store = User(first_name=f_name,last_name=l_name,email=email,username=username)
+                              store.set_password(pass1) #esse hi humara password store ho sakta h User model wala..
+                              store.save()
+                              messages.success(request,'User Created Successfully')
+                              return redirect('Signup')
+                  else:
+                        fm = Extradata()
+                        fm.order_fields(field_order=['first_name','last_name','username','email','password1','password2'])
+                  return render(request,'full/Signup.html',{'form':fm})
 
 
 
@@ -1903,7 +1924,7 @@ Example:-
 
 ------>step 3: Now show User Profile only if User is authenticated for this use-->request.user.is_autheticated
 
------->step 4: Now create logout function useing -----> logout(request)
+------>step 4: Now create logout function using -----> logout(request)
                   from django.contrib.auth import authenticate,login,logout
 
 
@@ -2067,7 +2088,7 @@ views.py----------------->
                         # fm = UserChangeForm(instance=request.user)  #bahut jada unnecssary data aa rha tha
                         fm = EditUserProfileForm(request.POST,instance=request.user)
                         if fm.is_valid():
-                        fm.save()
+                              fm.save()
                         messages.success(request,'Data Updated successfully')
                   else:
                         fm = EditUserProfileForm(instance=request.user)
